@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Graphics Lesson</title>
+    <script src="http://ajax.googleapis.com/aja§x/libs/jquery/1.11.2/jquery.min.js"></script>
+
+    <style type="text/css">
+
+        #canvas {
+            border: 1px solid black;
+        }
+
+        #animated {
+            border: 2px solid darkred;
+            width: 500px;
+            height: 20px;
+            margin-bottom: 15px;
+            spacing: 3px;
+        }
+
+        #drawn {
+            border: 2px solid darkgreen;
+            width: 500px;
+            height: 20px;
+            spacing: 3px;
+        }
+
+        #addObject {
+
+            }
+
+        #buttonFrame {
+            background-color: blue;
+            position: absolute;
+            top: 300px;
+            left: 600px;
+            border: 2px solid red;
+            margin: 3px;
+            padding: 3px;
+        }
+
+        #showObject {
+            position : absolute;
+            top : 0px;
+            left : 600px;
+            background-color: lightcyan;
+            margin: 3px;
+            padding: 3px;
+            width :200px;
+            height : 200px;
+
+        }
+        #mouseCoordinates {
+            position : absolute;
+            top : 220px;
+            left : 600px;
+            margin: 3px;
+            padding: 3px;
+            height: 20px;
+            width :200px;
+        }
+    </style>
+</head>
+<body>
+<canvas id="canvas" width="500" height="500" onclick="onCanvasClick()"></canvas>
+<div id="showObject"></div>
+<div id="mouseCoordinates"></div>
+
+<div id="buttonFrame">
+    <button id="addObject" name="addObject" onclick="addObject(Math.random()*4);">Add Object</button><br>
+    <button id="startAni" name="StartAnimation" onclick="startAnimation();">Start Animation</button><br>
+    <button id="stopAni" name="StopAnimation" onclick="stopAnimation();">Stop Animation</button>
+</div>
+<div id="animated">
+    Animated:
+    <div id="anbuttons" action="">
+        <button class="ani" name="1" onclick="toggleMoving(1);">1</button>
+        <button class="ani" name="2" onclick="toggleMoving(2);">2</button>
+        <button class="ani" name="3" onclick="toggleMoving(3);">3</button>
+        <button class="ani" name="4" onclick="toggleMoving(4);">4</button>
+        <button class="ani" name="5" onclick="toggleMoving(5);">5</button>
+    </div>
+</div>
+<div id="drawn">
+    Drawn:
+    <div id="drbuttons" action="">
+        <button class="dra" name="1" onclick="toggleDrawing(1);">1</button>
+        <button class="dra" name="2" onclick="toggleDrawing(2);">2</button>
+        <button class="dra" name="3" onclick="toggleDrawing(3);">3</button>
+        <button class="dra" name="4" onclick="toggleDrawing(4);">4</button>
+        <button class="dra" name="5" onclick="toggleDrawing(5);">5</button>
+    </div>
+</div>
+
+<script src="Canvas24.js"></script>
+
+</body>
+</html>
