@@ -64,4 +64,20 @@ $(document).ready(function() {
             $("#order-details").append($orderItem);
         });
     }
+
+    // Make orders draggable
+    $(".spirit").draggable({
+        helper: "clone",
+        revert: "invalid"
+    });
+
+    // Make cart droppable
+    $("#right-panel").droppable({
+        accept: ".spirit",
+        drop: function(event, ui) {
+            const droppedItem = ui.draggable.text();
+            const $cartItem = $("<div>").text(droppedItem);
+            $("#order-container").append($cartItem);
+        }
+    });
 });
