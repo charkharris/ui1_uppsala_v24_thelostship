@@ -4,7 +4,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="Beverages.js"></script>
     <script src="drinkload.js"></script>
-    
+    <script src="getorders.js"></script>
 
     
 
@@ -15,13 +15,29 @@
         
         /* Style for the spirit boxes */
         .spirit {
-            width: 200px; /* Set width */
-            border: 1px solid #ccc; /* Border */
-            padding: 10px; /* Padding */
-            margin: 10px; /* Margin for spacing */
-            display: inline-block; /* Display inline block */
-            vertical-align: top; /* Align to the top */
+    width: 200px; /* Set width */
+    border: 1px solid #ccc; /* Border */
+    padding: 10px; /* Padding */
+    margin: 10px; /* Margin for spacing */
+    display: inline-block; /* Display inline block */
+    vertical-align: top; /* Align to the top */
+    text-align: center; /* Center text horizontally */
+}
+
+        
+
+        .spirit p, .spirit button {
+            position: relative; /* Ensures content stays above the image */
+            z-index: 1; /* Ensures content stays above the image */
         }
+
+        .image-container {
+    width: 150px; /* Adjust width as needed */
+    height: 150px; /* Adjust height as needed */
+    background-size: cover; /* Cover the entire container */
+    background-position: center; /* Center the background image */
+    border: 1px solid #ccc; /* Optional: Add a border */
+}
     
         body {
             margin: 0;
@@ -204,8 +220,12 @@
            </div>
         </div>
 
-        <div class="right-panel">
-            Right Panel
+        <div class="right-panel" id =  "right-panel">
+            Cart
+            <div id="cart-container">      <div id="order-container">            </div>      </div>
+            <div id="submit-order">  </div>
+            <div id="order-details">                       </div>
+            
         </div>
 
         
