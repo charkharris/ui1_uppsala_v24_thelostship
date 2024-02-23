@@ -30,18 +30,34 @@ $(document).ready(function () {
         const $addToCartButton = $("<button>").text("Add to Cart");
         $addToCartButton.click(function () {
           // Add spirit to cart
-          const $cartItem = $("<div>").text(
+
+          const $cartItem = $("<div id = cart-item>").text(
             spirit.namn + " - " + spirit.prisinklmoms + "kr"
           );
+          const $trashButton = $("<button>").addClass("trash-button");
+
+          // Add Font Awesome icon to the button
+          const $trashIcon = $("<i>").addClass("fa fa-trash");
+
+          // Append the icon to the button
+          $trashButton.append($trashIcon);
+
+          // Append the button to the cart item
+          $cartItem.append($trashButton);
           $("#order-container").append($cartItem);
         });
-        $nameElement.append($("<p>").text(spirit.namn));
-        $nameElement.append($("<p>").text(spirit.prisinklmoms + "kr"));
+
+        //Combine name and price in the same div
+        const spiritInfo = spirit.namn + " - " + spirit.prisinklmoms + "kr";
+        $nameElement.append(
+          $("<p>", { class: "spirit-info" }).text(spiritInfo)
+        );
         $nameElement.append($addToCartButton);
 
         $("#drink-name").append($nameElement);
       });
     }
+    drinksDrag();
   }
 
   const alcoholicCategory = document.getElementById("alcoholic");
@@ -51,6 +67,7 @@ $(document).ready(function () {
     const newTitle = "Alcoholic";
     const $newTitleElement = $("<h1>").text(newTitle);
     $("#title-container").empty().append($newTitleElement);
+    drinksDrag();
   });
 
   // Add submit order button to cart
@@ -76,6 +93,7 @@ $(document).ready(function () {
     // Display orders at the bottom of the page
     displayOrders(orders);
   });
+
   $("#submit-order").append($submitOrderButton);
 
   const $clearOrderButton = $("<button>").append(
@@ -98,4 +116,37 @@ $(document).ready(function () {
       $("#order-details").append($orderItem);
     });
   }
+
+  function drinksDrag() {
+    // Make orders draggable
+    $(".spirit").draggable({
+      helper: "clone",
+      revert: "invalid",
+    });
+
+    // Make cart droppable
+    $("#right-panel").droppable({
+      accept: ".spirit",
+      drop: function (event, ui) {
+        const droppedItemText = ui.draggable.find(".spirit-info").text();
+        const $cartItem = $("<div id = cart-item>").text(droppedItemText);
+        const $trashButton = $("<button>").addClass("trash-button");
+
+        // Add Font Awesome icon to the button
+        const $trashIcon = $("<i>").addClass("fa fa-trash");
+
+        // Append the icon to the button
+        $trashButton.append($trashIcon);
+
+        // Append the button to the cart item
+        $cartItem.append($trashButton);
+        $("#order-container").append($cartItem);
+      },
+    });
+  }
+  drinksDrag();
+
+  $("#cart-container").on("click", ".trash-button", function () {
+    $(this).closest("#cart-item").remove();
+  });
 });

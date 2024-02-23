@@ -24,6 +24,26 @@
   background: #965d02;
   text-decoration: none;
 }
+#cart-item {
+  position: relative;
+  padding-left: 30px; /* Adjust this value as needed */
+  padding-bottom: 6px;
+}
+
+#cart-item:hover {
+  background: #965d02;
+  text-decoration: none;
+}
+
+.trash-button {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.trash-button:hover {
+  background: red;
+}
 
 /* Style for the spirit boxes */
 .spirit {

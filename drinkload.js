@@ -41,13 +41,23 @@ $(document).ready(function () {
           $addToCartButton.click(function () {
             // Add spirit to cart
 
-            const $cartItem = $("<div>").text(
+            const $cartItem = $("<div id = cart-item>").text(
               spirit.namn + " - " + spirit.prisinklmoms + "kr"
             );
+            const $trashButton = $("<button>").addClass("trash-button");
+
+            // Add Font Awesome icon to the button
+            const $trashIcon = $("<i>").addClass("fa fa-trash");
+
+            // Append the icon to the button
+            $trashButton.append($trashIcon);
+
+            // Append the button to the cart item
+            $cartItem.append($trashButton);
             $("#order-container").append($cartItem);
           });
 
-          // Combine name and price in the same div
+          //Combine name and price in the same div
           const spiritInfo = spirit.namn + " - " + spirit.prisinklmoms + "kr";
           $nameElement.append(
             $("<p>", { class: "spirit-info" }).text(spiritInfo)
@@ -58,28 +68,44 @@ $(document).ready(function () {
         });
       }
     });
+
+    drinksDrag();
   }
 
   displayItemsByCategory();
-
+  drinksDrag();
   const homeCategory = document.getElementById("home");
 
   homeCategory.addEventListener("click", function () {
     displayItemsByCategory();
   });
-  // Make orders draggable
-  $(".spirit").draggable({
-    helper: "clone",
-    revert: "invalid",
-  });
 
-  // Make cart droppable
-  $("#right-panel").droppable({
-    accept: ".spirit",
-    drop: function (event, ui) {
-      const droppedItemText = ui.draggable.find(".spirit-info").text();
-      const $cartItem = $("<div>").text(droppedItemText);
-      $("#order-container").append($cartItem);
-    },
-  });
+  function drinksDrag() {
+    // Make orders draggable
+    $(".spirit").draggable({
+      helper: "clone",
+      revert: "invalid",
+    });
+
+    // Make cart droppable
+    $("#right-panel").droppable({
+      accept: ".spirit",
+      drop: function (event, ui) {
+        const droppedItemText = ui.draggable.find(".spirit-info").text();
+        const $cartItem = $("<div id = cart-item>").text(droppedItemText);
+        const $trashButton = $("<button>").addClass("trash-button");
+
+        // Add Font Awesome icon to the button
+        const $trashIcon = $("<i>").addClass("fa fa-trash");
+
+        // Append the icon to the button
+        $trashButton.append($trashIcon);
+
+        // Append the button to the cart item
+        $cartItem.append($trashButton);
+        $("#order-container").append($cartItem);
+      },
+    });
+  }
+  drinksDrag();
 });
