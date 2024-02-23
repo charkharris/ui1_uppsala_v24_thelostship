@@ -1,178 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="Beverages.js"></script>
-    <script src="drinkload.js"></script>
-    <script src="getorders.js"></script>
-
     
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ordering Page</title>
-    <style>
-        
-        /* Style for the spirit boxes */
-        .spirit {
-    width: 200px; /* Set width */
-    border: 1px solid #ccc; /* Border */
-    padding: 10px; /* Padding */
-    margin: 10px; /* Margin for spacing */
-    display: inline-block; /* Display inline block */
-    vertical-align: top; /* Align to the top */
-    text-align: center; /* Center text horizontally */
-}
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="smallerBeverages.js"></script>
+    <script src="drinkload.js"></script>
+    <script src="alcoholfree.js"></script>
+    <script src="filter.js"></script>
+    <script src="getorders.js"></script>
 
         
-
-        .spirit p, .spirit button {
-            position: relative; /* Ensures content stays above the image */
-            z-index: 1; /* Ensures content stays above the image */
-        }
-
-        .image-container {
-    width: 150px; /* Adjust width as needed */
-    height: 150px; /* Adjust height as needed */
-    background-size: cover; /* Cover the entire container */
-    background-position: center; /* Center the background image */
-    border: 1px solid #ccc; /* Optional: Add a border */
-}
-    
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-        }
-
-        header {
-            background-color: #333;
-            color: #fff;
-            padding: 10px;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        header img {
-            height: 30px;
-            width: 30px;
-            margin-right: 10px;
-        }
-
-        .profile-icon {
-            border-radius: 50%;
-            background-color: #fff;
-            padding: 5px;
-            cursor: pointer;
-        }
-
-        main {
-            display: flex;
-        }
-
-        .left-panel, .right-panel {
-            width: 250px;
-            height: 100vh;
-            background-color: #f0f0f0;
-            position: fixed;
-            top: 40px; 
-            overflow: auto;
-        }
-
-        .left-panel {
-            left: 0;
-        }
-
-        .right-panel {
-            right: 0;
-        }
-
-        .content {
-            flex-grow: 1;
-            padding: 5px;
-            margin-left: 250px; 
-            margin-right: 250px; 
-        }
-	
-.filter-label {
-     flex-grow: 1;
-}
-	
-.horizontal-bar {
-    display: flex;
-    align-items: center;
-	padding: 5px;
-	justify-content: center;
-    border-top: 1px solid #ccc;
-	border-radius: 4px;
-	background-color: #f0f0f0;
-}
-
-
-.search-container {
-    display: flex;
-    align-items: center;
-}
-
-.search-container input {
-    padding: 5px;
-    margin-right: 10px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-}
-
-.search-icon {
-    cursor: pointer;
-}
-
-        footer {
-            background-color: #333;
-            color: #fff;
-            text-align: center;
-            padding: 10px;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
-		
-.left-panel {
-    display: flex;
-    height: 100vh;
-}
-
-.sidebar {
-    width: 100px;
-    background-color: #ddd;
-    padding: 10px;
-}
-
-.item-list {
-    flex-grow: 1;
-    background-color: #f0f0f0;
-    padding: 10px;
-}
-
-.main-content {
-    padding: 20px;
-}
-
-.tile {
-    border: 1px solid #ccc;
-    padding: 10px;
-    margin: 5px;
-    text-align: center;
-    width: calc(25% - 20px);
-    display: inline-block;
-    box-sizing: border-box;
-}
-
-.tile img {
-    max-width: 100%;
-    height: auto;
-    margin-bottom: 5px;
-}
-
-    </style>
 </head>
 <body>
     <header>
@@ -192,9 +36,9 @@
             <!-- Left Panel Content -->
             <div class="sidebar">
                 <!-- Sidebar Content -->
-                <p class="category" onclick="showItems('Alcoholic')">Alcoholic</p>
+                <p class="category" id="alcoholic">Alcoholic</p>
                 <p class="category" onclick="showItems('Soft Drink')">Soft Drink</p>
-                <p class="category" id="alchoholfree" onclick="showItems('Alcohol free')">Alcohol-free</p>
+                <p class="category" id="alcoholfree">Alcohol-free</p>
             </div>
         </div>
 
@@ -205,6 +49,7 @@
         </div>
 
         <div class="content">
+            
             <!-- Main Content -->
             <h2 style="text-align: center;">Drink</h2>
             <div class="horizontal-bar">
@@ -215,19 +60,27 @@
               </div>
               
             </div>
+        
            <div class ="menu-items" id="tile-section">
             <div class="drinks" id = "title-container"></div>
             <div class="drinks" id = "drink-name"></div>
            </div>
         </div>
 
-        <div class="right-panel" id =  "right-panel">
+        <div class="right-panel" id="right-panel">
             Cart
-            <div id="cart-container">      <div id="order-container">            </div>      </div>
-            <div id="submit-order">  </div>
-            <div id="order-details">                       </div>
+            <div id="cart-container">
+                <div id="order-container"></div>
+            </div>
+        
+            <div id="button-container">
+                <div id="submit-order"></div>
+                <div id="clear-order"></div>
+            </div>
             
+            <div id="order-details"></div>
         </div>
+        
 
         
     </main>

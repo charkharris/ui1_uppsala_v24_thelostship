@@ -1,24 +1,37 @@
 $(document).ready(function() {
-    const spiritsArray = DB2.spirits;
-    let orders = JSON.parse(localStorage.getItem('orders')) || [];
-    localStorage.clear()
-    const title = "Cognac";
-    const $titleElement = $("<h1>").text(title);
-    $("#title-container").append($titleElement);
 
-    const matchingSpirits = spiritsArray.filter(spirit => spirit.varugrupp === title);
-
-    if (matchingSpirits.length > 0) {
-        // Loop through the matching spirits
-        matchingSpirits.forEach(spirit => {
-            const $nameElement = $("<div>", { class: "spirit" });
+    
+    function displayItemsByCategory() {
+        const itemsContainer = document.getElementById("drink-name");
+        itemsContainer.innerHTML = "";
+        
+        // Extract unique categories from data
+        const categories = DB2.spirits.reduce((acc, curr) => {    
+          if (!acc.includes(curr.varugrupp)) {
+            acc.push(curr.varugrupp);
             
+          }
+          return acc;
+        }, []);
+        
+        categories.forEach(category => {
+          const categoryItems = DB2.spirits.filter(spirit => spirit.varugrupp === category);
+  
+          if (categoryItems.length > 0) {
+            // Create title element for the category
+            const categoryTitle = document.createElement("h2");
+            categoryTitle.textContent = category;
+            itemsContainer.appendChild(categoryTitle);
+  
+            // Display items for the category
+            categoryItems.forEach(spirit => {
+            const $nameElement = $("<div>", { class: "spirit" });
     
             // Add image container
             const $imageContainer = $("<div>", { class: "image-container" });
-            $imageContainer.css('background-image', 'url("file:///C:/Users/mhtah/Desktop/UI%20project/ui1_uppsala_v24_thelostship/images/' + spirit.namn + '.png")'); // Set background image
+            $imageContainer.css('background-image', 'url("images/' + spirit.namn + '.png")'); // Set background image
             $nameElement.append($imageContainer);
-    
+
             // Add button to add to cart
             const $addToCartButton = $("<button>").text("Add to Cart");
             $addToCartButton.click(function() {
@@ -26,58 +39,33 @@ $(document).ready(function() {
                 const $cartItem = $("<div>").text(spirit.namn);
                 $("#order-container").append($cartItem);
             });
-            $nameElement.append($("<p>").text(spirit.namn));
-            $nameElement.append($("<p>").text(spirit.prisinklmoms + "kr"));
+
+            // Combine name and price in the same div
+            const spiritInfo = spirit.namn + " - " + spirit.prisinklmoms + "kr";
+            $nameElement.append($("<p>", { class: "spirit-info" }).text(spiritInfo));;
             $nameElement.append($addToCartButton);
-           
-            $("#drink-name").append($nameElement);
-        });
-    }
-
-    // Add submit order button to cart
-    const $submitOrderButton = $("<button>").text("Submit Order");
-    $submitOrderButton.click(function() {
-        // Implement order submission logic here
-        const cartItems = $("#order-container").children().toArray().map(item => $(item).text());
-        orders.push(cartItems);
-        localStorage.setItem('orders', JSON.stringify(orders));
-
-        alert("Order submitted!");
-        // Clear the cart after submission
-        $("#order-container").empty();
-
-        // Display orders in console
         
-
-        // Display orders at the bottom of the page
-        displayOrders(orders);
-    });
-    $("#submit-order").append($submitOrderButton);
-
-
-    // Function to display orders
-    function displayOrders(orders) {
-         // Clear previous orders
-         $("#order-details").empty();
-        orders.forEach((order, index) => {
-            const $orderItem = $("<li>").text(`Order ${index + 1}: ${order.join(', ')}`);
-            $("#order-details").append($orderItem);
+            $("#drink-name").append($nameElement);
+            });
+          }
         });
-    }
+      }
 
-    // Make orders draggable
-    $(".spirit").draggable({
+      displayItemsByCategory();
+
+      // Make orders draggable
+      $(".spirit").draggable({
         helper: "clone",
         revert: "invalid"
     });
-
+    
     // Make cart droppable
     $("#right-panel").droppable({
         accept: ".spirit",
         drop: function(event, ui) {
-            const droppedItem = ui.draggable.text();
-            const $cartItem = $("<div>").text(droppedItem);
-            $("#order-container").append($cartItem);
+            const droppedItemText = ui.draggable.find(".spirit-info").text(); 
+            const $cartItem = $("<div>").text(droppedItemText); 
+            $("#order-container").append($cartItem); 
         }
     });
 });
