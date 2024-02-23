@@ -1,185 +1,183 @@
 #purchase-btn {
-    background: #802021;
-    background-image: -webkit-linear-gradient(top, #b85d18, #6b400a);
-    background-image: -moz-linear-gradient(top, #b85d18, #6b400a);
-    background-image: -ms-linear-gradient(top, #b85d18, #6b400a);
-    background-image: -o-linear-gradient(top, #b85d18, #6b400a);
-    background-image: linear-gradient(to bottom, #b85d18, #6b400a);
-    -webkit-border-radius: 10;
-    -moz-border-radius: 10;
-    border-radius: 10px;
-    font-family: Arial;
-    color: #fcfcfc;
-    font-size: 27px;
-    padding: 10px 20px 10px 20px;
-    text-decoration: none;
-    position: absolute;
-    bottom: 100px;
-    width: 100%;
-    display: flex;
-    justify-content: center
-  }
-  
-  #purchase-btn:hover {
-    background: #965d02;
-    text-decoration: none;
-  }
+  background: #802021;
+  background-image: -webkit-linear-gradient(top, #b85d18, #6b400a);
+  background-image: -moz-linear-gradient(top, #b85d18, #6b400a);
+  background-image: -ms-linear-gradient(top, #b85d18, #6b400a);
+  background-image: -o-linear-gradient(top, #b85d18, #6b400a);
+  background-image: linear-gradient(to bottom, #b85d18, #6b400a);
+  -webkit-border-radius: 10;
+  -moz-border-radius: 10;
+  border-radius: 10px;
+  font-family: Arial;
+  color: #fcfcfc;
+  font-size: 27px;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+  position: absolute;
+  bottom: 100px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
 
-        
-        /* Style for the spirit boxes */
-        .spirit {
-            width: 200px; /* Set width */
-            border: 1px solid #ccc; /* Border */
-            padding: 10px; /* Padding */
-            margin: 10px; /* Margin for spacing */
-            display: inline-block; /* Display inline block */
-            vertical-align: top; /* Align to the top */
-            text-align: center; /* Center text horizontally */
-        }
-        
-                
-        
-                .spirit p, .spirit button {
-                    position: relative; /* Ensures content stays above the image */
-                    z-index: 1; /* Ensures content stays above the image */
-                }
-        
-                .image-container {
-            width: 150px; /* Adjust width as needed */
-            height: 150px; /* Adjust height as needed */
-            background-size: cover; /* Cover the entire container */
-            background-position: center; /* Center the background image */
-            border: 1px solid #ccc; /* Optional: Add a border */
-        }
-            
-                body {
-                    margin: 0;
-                    font-family: Arial, sans-serif;
-                }
-        
-                header {
-                    background-color: #333;
-                    color: #fff;
-                    padding: 10px;
-                    display: flex;
-                    justify-content: space-between;
-                }
-        
-                header img {
-                    height: 30px;
-                    width: 30px;
-                    margin-right: 10px;
-                }
-        
-                .profile-icon {
-                    border-radius: 50%;
-                    background-color: #fff;
-                    padding: 5px;
-                    cursor: pointer;
-                }
-        
-                main {
-                    display: flex;
-                }
-        
-                .left-panel, .right-panel {
-                    width: 250px;
-                    height: 100vh;
-                    background-color: #f0f0f0;
-                    position: fixed;
-                    top: 40px; 
-                    overflow: auto;
-                }
-        
-                .left-panel {
-                    left: 0;
-                }
-        
-                .right-panel {
-                    right: 0;
-                }
-        
-                .content {
-                    flex-grow: 1;
-                    padding: 5px;
-                    margin-left: 250px; 
-                    margin-right: 250px; 
-                }
-            
-        .filter-label {
-             flex-grow: 1;
-        }
-            
-        .horizontal-bar {
-            display: flex;
-            align-items: center;
-            padding: 5px;
-            justify-content: center;
-            border-top: 1px solid #ccc;
-            border-radius: 4px;
-            background-color: #f0f0f0;
-        }
-        
-        
-        .search-container {
-            display: flex;
-            align-items: center;
-        }
-        
-        .search-container input {
-            padding: 5px;
-            margin-right: 10px;
-            border: 1px solid #ccc;
-            border-radius: 3px;
-        }
-        
-        .search-icon {
-            cursor: pointer;
-        }
-        
-                footer {
-                    background-color: #333;
-                    color: #fff;
-                    text-align: center;
-                    padding: 10px;
-                    position: fixed;
-                    bottom: 0;
-                    width: 100%;
-                }
-                
-        .left-panel {
-            display: flex;
-            height: 100vh;
-        }
-        
-        .sidebar {
-            width: 100px;
-            background-color: #ddd;
-            padding: 10px;
-        }
-        
-        .item-list {
-            flex-grow: 1;
-            background-color: #f0f0f0;
-            padding: 10px;
-        }
-        
-        .main-content {
-            padding: 20px;
-        }
-        
-        .tile {
-            border: 1px solid #ccc;
-            padding: 10px;
-            margin: 5px;
-            text-align: center;
-            width: calc(25% - 20px);
-            display: inline-block;
-            box-sizing: border-box;
-        }
-        
-        .tile img {
-            max-width: 100%;
-            height: auto;
-            margin-bottom: 5px;
-        }
+#purchase-btn:hover {
+  background: #965d02;
+  text-decoration: none;
+}
+
+/* Style for the spirit boxes */
+.spirit {
+  width: 200px; /* Set width */
+  border: 1px solid #ccc; /* Border */
+  padding: 10px; /* Padding */
+  margin: 10px; /* Margin for spacing */
+  display: inline-block; /* Display inline block */
+  vertical-align: top; /* Align to the top */
+  text-align: center; /* Center text horizontally */
+}
+
+.spirit p,
+.spirit button {
+  position: relative; /* Ensures content stays above the image */
+  z-index: 1; /* Ensures content stays above the image */
+}
+
+.image-container {
+  width: 150px; /* Adjust width as needed */
+  height: 150px; /* Adjust height as needed */
+  background-size: cover; /* Cover the entire container */
+  background-position: center; /* Center the background image */
+  border: 1px solid #ccc; /* Optional: Add a border */
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+header {
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+header img {
+  height: 30px;
+  width: 30px;
+  margin-right: 10px;
+}
+
+.profile-icon {
+  border-radius: 50%;
+  background-color: #fff;
+  padding: 5px;
+  cursor: pointer;
+}
+
+main {
+  display: flex;
+}
+
+.left-panel,
+.right-panel {
+  width: 250px;
+  height: 100vh;
+  background-color: #f0f0f0;
+  position: fixed;
+  top: 40px;
+  overflow: auto;
+}
+
+.left-panel {
+  left: 0;
+}
+
+.right-panel {
+  right: 0;
+}
+
+.content {
+  flex-grow: 1;
+  padding: 5px;
+  margin-left: 250px;
+  margin-right: 250px;
+}
+
+.filter-label {
+  flex-grow: 1;
+}
+
+.horizontal-bar {
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  justify-content: center;
+  border-top: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f0f0f0;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+}
+
+.search-container input {
+  padding: 5px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.search-icon {
+  cursor: pointer;
+}
+
+footer {
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 10px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+.left-panel {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 100px;
+  background-color: #ddd;
+  padding: 10px;
+}
+
+.item-list {
+  flex-grow: 1;
+  background-color: #f0f0f0;
+  padding: 10px;
+}
+
+.main-content {
+  padding: 20px;
+}
+
+.tile {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 5px;
+  text-align: center;
+  width: calc(25% - 20px);
+  display: inline-block;
+  box-sizing: border-box;
+}
+
+.tile img {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 5px;
+}
