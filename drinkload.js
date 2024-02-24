@@ -33,10 +33,7 @@ $(document).ready(function () {
           $imageContainer.css(
             "background-image",
             'url("images/' + spirit.namn + '.png")'
-          ); // Set background image
-		  $imageContainer.css('background-size', 'contain');
-		  $imageContainer.css('margin', 'auto');
-          $imageContainer.css('text-align', 'center');
+          );
           $nameElement.append($imageContainer);
 		  
 
