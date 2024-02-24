@@ -76,14 +76,17 @@
   cursor: pointer;
 }
 .image-container {
-  width: 150px; /* Adjust width as needed */
-  height: 150px; /* Adjust height as needed */
-  background-size: cover; /* Cover the entire container */
-  background-position: center; /* Center the background image */
-  border: 1px solid #ccc; /* Optional: Add a border */
+  width: 150px; 
+  height: 150px; 
+  background-size: cover; 
+  background-position: center; 
+  border: 1px solid #ccc; 
+  background-size: contain;
+  margin: auto;
+  text-align: center;
 }
 .category {
-  cursor: pointer; /* Change cursor to pointer on hover */
+  cursor: pointer; 
 }
 
 body {

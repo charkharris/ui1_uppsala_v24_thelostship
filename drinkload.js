@@ -34,8 +34,9 @@ $(document).ready(function () {
           $imageContainer.css(
             "background-image",
             'url("images/' + spirit.namn + '.png")'
-          ); // Set background image
+          );
           $nameElement.append($imageContainer);
+		  
 
           // Add button to add to cart
           const $addToCartButton = $("<button>").text("Add to Cart");
