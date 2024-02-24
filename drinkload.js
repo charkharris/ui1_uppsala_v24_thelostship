@@ -26,6 +26,7 @@ $(document).ready(function () {
 
         // Display items for the category
         categoryItems.forEach((spirit) => {
+          spirit.namn = decodeURIComponent(escape(spirit.namn));
           const $nameElement = $("<div>", { class: "spirit" });
 
           // Add image container

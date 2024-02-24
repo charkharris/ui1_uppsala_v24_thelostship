@@ -1,32 +1,26 @@
 $(document).ready(function () {
   const logSpan = document.querySelector(".log");
 
-  // Fill the span with text
   logSpan.textContent = "Login";
   logSpan.addEventListener("click", function () {
     // Prompt the user for username and password
     const username = prompt("Enter your username:");
     const password = prompt("Enter your password:");
 
-    // Call the login function with the provided username and password
     login(username, password);
   });
 
   function login(username, password) {
-    // Search for the user with the provided username in the DB.users array
     var user = DB.users.find(function (user) {
       return user.username === username;
     });
 
     // Check if a user with the provided username exists
     if (user) {
-      // Verify the password
       if (user.password === password) {
         console.log("Correct");
         staffview();
         // Password is correct, login successful
-
-        // You can perform further actions here, such as redirecting to a dashboard page
       } else {
         // Password is incorrect
         console.log("Incorrect password. Please try again.");
@@ -42,8 +36,6 @@ $(document).ready(function () {
     $("#tile-section").empty();
 
     function displayOrders(orders) {
-      // Clear previous orders
-      console.log("hello");
       const tileSection = document.getElementById("tile-section");
 
       // Clear everything inside the div
