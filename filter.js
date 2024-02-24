@@ -80,8 +80,52 @@ $(document).ready(function () {
       .children()
       .toArray()
       .map((item) => $(item).text());
-    console.log(cartItems);
-    orders.push(cartItems);
+
+    // Define the status for the new order
+    const status = "Received";
+
+    // Create an object representing the order with items and status
+    const newOrder = {
+      items: [],
+      status: status,
+    };
+
+    // Create a map to store item counts and total price
+    const itemInfo = {};
+
+    // Loop through cart items
+    cartItems.forEach((item) => {
+      const [itemName, itemPrice] = item.split(" - ");
+      if (itemInfo.hasOwnProperty(itemName)) {
+        // Increment the counter for the item
+
+        itemInfo[itemName].count++;
+        itemInfo[itemName].totalPrice += parseFloat(itemPrice);
+      } else {
+        // Initialize the counter for the item
+        itemInfo[itemName] = {
+          count: 1,
+          totalPrice: parseFloat(itemPrice),
+        };
+      }
+    });
+    console.log(itemInfo);
+    let totalOrderPrice = 0;
+    // Add items to the new order with counters and total price
+    Object.entries(itemInfo).forEach(([itemName, info]) => {
+      const totalPrice = info.totalPrice;
+      totalOrderPrice += info.totalPrice;
+      console.log(totalOrderPrice);
+      newOrder.items.push(
+        `${"'" + itemName + "'"} x${info.count} - ${totalPrice.toFixed(2)}kr `
+      );
+    });
+    newOrder.items.push(`${"Total"}  - ${totalOrderPrice.toFixed(2)}kr `);
+
+    // Push the new order object to the orders array
+    orders.push(newOrder);
+
+    // Update localStorage with the updated orders array
     localStorage.setItem("orders", JSON.stringify(orders));
 
     alert("Order submitted!");
@@ -97,7 +141,7 @@ $(document).ready(function () {
   $("#submit-order").append($submitOrderButton);
 
   const $clearOrderButton = $("<button>").append(
-    '<i class="fas fa-trash-alt"></i>'
+    '<i class="fas fa-trash-alt" id = "clear-order-button"></i>'
   );
   $clearOrderButton.click(function () {
     // Clear the cart
@@ -111,7 +155,7 @@ $(document).ready(function () {
     $("#order-details").empty();
     orders.forEach((order, index) => {
       const $orderItem = $("<li>").text(
-        `Order ${index + 1}: ${order.join(", ")}`
+        `Order ${index + 1}: ${order.items.join(", ")}`
       );
       $("#order-details").append($orderItem);
     });

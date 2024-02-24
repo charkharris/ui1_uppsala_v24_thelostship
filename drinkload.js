@@ -71,8 +71,8 @@ $(document).ready(function () {
 
     drinksDrag();
   }
-
   displayItemsByCategory();
+  //displayItemsByCategory();
   drinksDrag();
   const homeCategory = document.getElementById("home");
 

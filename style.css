@@ -19,12 +19,15 @@
   display: flex;
   justify-content: center;
 }
-
+#clear-order-button {
+  cursor: pointer;
+}
 #purchase-btn:hover {
   background: #965d02;
   text-decoration: none;
 }
 #cart-item {
+  cursor: pointer;
   position: relative;
   padding-left: 30px; /* Adjust this value as needed */
   padding-bottom: 6px;
@@ -36,6 +39,7 @@
 }
 
 .trash-button {
+  cursor: pointer;
   position: absolute;
   right: 0;
   top: 50%;
@@ -45,8 +49,13 @@
   background: red;
 }
 
+.log {
+  cursor: pointer;
+}
+
 /* Style for the spirit boxes */
 .spirit {
+  cursor: pointer;
   width: 200px; /* Set width */
   border: 1px solid #ccc; /* Border */
   padding: 10px; /* Padding */
@@ -54,20 +63,27 @@
   display: inline-block; /* Display inline block */
   vertical-align: top; /* Align to the top */
   text-align: center; /* Center text horizontally */
+  height: 250px;
 }
 
-.spirit p,
-.spirit button {
+.spirit p {
   position: relative; /* Ensures content stays above the image */
   z-index: 1; /* Ensures content stays above the image */
 }
 
+.spirit button {
+  position: relative;
+  cursor: pointer;
+}
 .image-container {
   width: 150px; /* Adjust width as needed */
   height: 150px; /* Adjust height as needed */
   background-size: cover; /* Cover the entire container */
   background-position: center; /* Center the background image */
   border: 1px solid #ccc; /* Optional: Add a border */
+}
+.category {
+  cursor: pointer; /* Change cursor to pointer on hover */
 }
 
 body {
