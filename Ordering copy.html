@@ -196,7 +196,42 @@
     max-width: 80%;
     max-height: 80%;
     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
 }
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+.modal-body {
+    display: flex;
+}
+
+.left-column, .right-column {
+    flex-basis: 50%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.left-column {
+    align-items: flex-start;
+    text-align: left;
+}
+
+.right-column {
+    align-items: flex-start;
+    text-align: right;
+}
+
+.add-to-cart {
+    margin-top: 20px;
+    align-self: center;
+}
+
 
 .close {
     color: #aaa;
@@ -204,6 +239,7 @@
     font-size: 28px;
     font-weight: bold;
     cursor: pointer;
+    margin-left: auto;
 }
 
 .close:hover, .close:focus {
@@ -267,8 +303,10 @@
         
         <div id="myModal" class="modal">
             <div class="modal-content">
-                <span class="close">&times;</span>
-                <div id="modal-header"></div>
+                <div id="modal-header">
+                    <h1>Modal Title</h1>
+                    <span class="close">&times;</span>
+                </div>
                 <div id="modal-body"></div>
                 <div id="modal-footer"></div>
             </div>

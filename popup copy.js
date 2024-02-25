@@ -15,7 +15,8 @@ function hideModal(){
 //close modal on click outside of it
 window.onclick = function(event){
     var modal = document.getElementById('myModal');
-    if (event.target == modal){
+    var closeButton = document.querySelector('.close')
+    if (event.target == modal || event.target == closeButton){
         hideModal();
     }
 }
@@ -47,6 +48,7 @@ function showPopup(){
 
 //this function decides what content to show in the modal based on the type of popup required
 function showModalWithContent(popupType, data) {
+    var modal = document.getElementById('myModal')
     var modalHeader = document.getElementById('modal-header');
     var modalBody = document.getElementById('modal-body');
     var modalFooter = document.getElementById('modal-footer');
@@ -61,7 +63,7 @@ function showModalWithContent(popupType, data) {
         case 'menuItem':
             //prepare and show modal content for a menu item
             var content = prepareMenuItemContent(data);
-            modalHeader.innerHTML = content.header;
+            modalHeader.innerHTML = `<h1>${content.name}</h1><span class="close">&times;</span>`;
             modalBody.innerHTML = menuItemTemplate(content);
             modalFooter.innerHTML = content.footer;
             break;
@@ -90,7 +92,7 @@ function prepareMenuItemContent(itemId) {
             { name: 'Ice', checked: false }
         ],
         description: 'A refreshing ale from Norland\'s Guild.',
-        footer: '<button id="add-to-booty">Add to cart</button>'
+        footer: '<button id="add-to-booty">Add to cart</button'
     };
 
     return item; // Return the item object with all details
@@ -106,20 +108,23 @@ function prepareCartContent() {
 
 function menuItemTemplate(item){
     return `
-        <div class = "modal-item-image">
-            <img src="${item.imageSec}" alt="${item.name}" />
-        </div>
-        <div class = "modal-item-ingredients">
-            ${item.ingredients.map(ing => `
-                <div>
-                    <input type = "checkbox" id="ing${ing.name}</label>
+        <div class="modal-body">
+            <div class="left-column">
+                <img class="modal-item-image" src="${item.imageSrc}" alt="${item.name}" style="width:100%; max-width: 100%; height:auto; display:block; margin-bottom: 1rem;"/>
+                <p class="modal-item-description" style="text-align:center;">${item.description}</p>
+            </div>
+            <div class="right-column">
+                <div class="modal-item-ingredients" style="overflow:auto;">
+                    ${item.ingredients.map(ing => `
+                        <div>
+                            <input type="checkbox" id="ing${ing.name}" ${ing.checked ? 'checked' : ''}/>
+                            <label for="ing${ing.name}">${ing.name}</label>
+                        </div>
+                    `).join('')}
                 </div>
-            `).join('')}
             </div>
-            <div class = "modal-item-description">
-                ${item.description}
-            </div>
-    `
+        </div>
+    `;
 }
 
 function cartTemplate(cart) {
