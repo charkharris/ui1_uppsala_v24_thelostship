@@ -28,7 +28,7 @@ function showPopup(){
     var menuItems = document.querySelectorAll('.spirit');
     menuItems.forEach(function(spirit){
         spirit.addEventListener('click', function(event){
-            console.log('Spirit clicked:', spirit.getAttribute('data-id')); // Log the clicked spirit's data-id
+            console.log('Spirit clicked:', spirit.getAttribute('data-id'));
             // Prevent the click action if it was a drag
             if (!spirit.classList.contains('ui-draggable-dragging')) {
                 var itemId = spirit.getAttribute('data-id');
@@ -41,7 +41,7 @@ function showPopup(){
     var submitOrder = document.querySelector('.submit-order');
     if (submitOrder) {
         submitOrder.addEventListener('click', function(){
-            console.log('Submit order clicked'); // Log when submit order is clicked
+            console.log('Submit order clicked');
             showModalWithContent('cart');
         });
     }
