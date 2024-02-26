@@ -12,35 +12,36 @@ function hideModal(){
     modal.style.display = "none"
 }
 
-//close modal on click outside of it
-window.onclick = function(event){
+// Close modal if the click is on the modal background or the close button
+window.onclick = function(event) {
     var modal = document.getElementById('myModal');
-    var closeButton = document.querySelector('.close')
-    if (event.target == modal || event.target == closeButton){
+    var closeButton = document.querySelector('.modal-close'); // Ensure this is the correct class name
+
+    if (event.target === modal || event.target === closeButton) {
         hideModal();
     }
-}
+};
 
-//close button
-document.getElementsByClassName("close")[0].onclick = function() {
-    hideModal();
-}
 
 function showPopup(){
-   
-    //attach to menu items
+    // Attach to menu items
     var menuItems = document.querySelectorAll('.spirit');
     menuItems.forEach(function(spirit){
-        spirit.addEventListener('click', function(){
-            var itemId = spirit.getAttribute('data-id');
-            showModalWithContent('menuItem', itemId);
+        spirit.addEventListener('click', function(event){
+            console.log('Spirit clicked:', spirit.getAttribute('data-id')); // Log the clicked spirit's data-id
+            // Prevent the click action if it was a drag
+            if (!spirit.classList.contains('ui-draggable-dragging')) {
+                var itemId = spirit.getAttribute('data-id');
+                showModalWithContent('menuItem', itemId);
+            }
         });
     });
 
-    //attach to submit order button
+    // Attach to submit order button
     var submitOrder = document.querySelector('.submit-order');
     if (submitOrder) {
         submitOrder.addEventListener('click', function(){
+            console.log('Submit order clicked'); // Log when submit order is clicked
             showModalWithContent('cart');
         });
     }
@@ -63,7 +64,7 @@ function showModalWithContent(popupType, data) {
         case 'menuItem':
             //prepare and show modal content for a menu item
             var content = prepareMenuItemContent(data);
-            modalHeader.innerHTML = `<h1>${content.name}</h1><span class="close">&times;</span>`;
+            modalHeader.innerHTML = `<h1>${content.name}</h1><span class="modal-close">&times;</span>`;
             modalBody.innerHTML = menuItemTemplate(content);
             modalFooter.innerHTML = content.footer;
             break;
@@ -129,8 +130,4 @@ function menuItemTemplate(item){
 
 function cartTemplate(cart) {
 
-}
-
-window.onload = function(){
-    showPopup(); //set up click events
 }
