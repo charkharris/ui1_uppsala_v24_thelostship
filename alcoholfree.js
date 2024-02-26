@@ -46,7 +46,7 @@ $(document).ready(function () {
         const $showDetailsButton = $("<button>").text("Show Details");
         $showDetailsButton.click(function () {
           // Code to show modal
-          showModalWithContent('menuItem', spirit.artikelid); // Assuming artikelid is the data-id or similar unique identifier
+          showModalWithContent('menuItem', spirit);
         });
     
         // Append the new button
