@@ -1,5 +1,4 @@
 $(document).ready(function () {
-  console.log("hello");
   const spiritsArray = DB2.spirits;
   const nonAlcoholicCategory = document.getElementById("alcoholfree");
 

@@ -2,6 +2,7 @@ $(document).ready(function () {
   const logSpan = document.querySelector(".log");
 
   logSpan.textContent = "Login";
+
   logSpan.addEventListener("click", function () {
     // Prompt the user for username and password
     const username = prompt("Enter your username:");
@@ -31,8 +32,84 @@ $(document).ready(function () {
     }
   }
   function staffview() {
+    const itemsContainer = document.getElementById("drink-name");
+    logSpan.textContent = "Logout";
+    const home = document.querySelector("#home");
+    home.textContent = "Orders";
+
+    const alcoholicToStock = document.querySelector("#alcoholic");
+    alcoholicToStock.textContent = "Stock";
+
+    const alcoholfreeToEpmty = document.querySelector("#alcoholfree");
+    alcoholfreeToEpmty.textContent = "";
+
+    home.addEventListener("click", function () {
+      staffview();
+    });
+
+    alcoholicToStock.addEventListener("click", function () {
+      $("#tile-section").empty();
+      const newTitle = "Alcoholic";
+      const $newTitleElement = $("<h1>").text(newTitle);
+      $("#tile-section").empty().append($newTitleElement);
+
+      DB2.spirits.forEach((spirit) => {
+        spirit.namn = decodeURIComponent(escape(spirit.namn));
+        const $spiritElement = $("<div>", { class: "spirit" });
+
+        // Add image container
+        const $imageContainer = $("<div>", { class: "image-container" });
+        $imageContainer.css(
+          "background-image",
+          'url("images/' + spirit.namn + '.png")'
+        );
+        $spiritElement.append($imageContainer);
+
+        // Prepare spirit information excluding stock number
+        const spiritInfo = spirit.namn + " - " + spirit.prisinklmoms + "kr";
+        $spiritElement.append(
+          $("<p>", { class: "spirit-info" }).text(spiritInfo)
+        );
+
+        // Create input field for changing stock number
+        const $stockInput = $("<input>", {
+          type: "number",
+          value: spirit.stock,
+          id: "stock_" + spirit.id, // Assuming each spirit has an id property
+        });
+        $stockInput.on("input", function () {
+          // Update the stock number in the spirits array when input changes
+          spirit.stock = parseInt($(this).val());
+        });
+        $spiritElement.append($("<label>").text("Stock: ").append($stockInput));
+
+        // Append $spiritElement to the drink-name div
+        $("#tile-section").append($spiritElement);
+        // Append the button to the DOM
+      });
+
+      const $updateStockButton = $("<button>", {
+        id: "updateStockButton",
+        text: "Update Stock",
+      });
+
+      $("#tile-section").append($updateStockButton);
+      $updateStockButton.on("click", function () {
+        updateStockValues(DB2.spirits);
+      });
+      function updateStockValues(spirits) {
+        spirits.forEach((spirit) => {
+          const stockInputValue = parseInt($("#stock_" + spirit.nr).val());
+          if (!isNaN(stockInputValue)) {
+            spirit.stock = stockInputValue;
+          }
+        });
+        // Optionally, you can perform further actions after updating the stock values
+      }
+    });
+
     const drinkHeading = document.querySelector("h2");
-    drinkHeading.textContent = "ORDERS";
+    drinkHeading.textContent = "STAFF";
     $("#tile-section").empty();
 
     function displayOrders(orders) {
