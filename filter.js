@@ -73,7 +73,7 @@ $(document).ready(function () {
   // Add submit order button to cart
   const $submitOrderButton = $("<button>")
     .attr("id", "purchase-btn")
-    .text("Pruchase");
+    .text("Purchase");
   $submitOrderButton.click(function () {
     // Implement order submission logic here
     const cartItems = $("#order-container")
