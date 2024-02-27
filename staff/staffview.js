@@ -1,35 +1,4 @@
 $(document).ready(function () {
-  const logSpan = document.querySelector(".log");
-
-  logSpan.textContent = "Login";
-  logSpan.addEventListener("click", function () {
-    // Prompt the user for username and password
-    const username = prompt("Enter your username:");
-    const password = prompt("Enter your password:");
-
-    login(username, password);
-  });
-
-  function login(username, password) {
-    var user = DB.users.find(function (user) {
-      return user.username === username;
-    });
-
-    // Check if a user with the provided username exists
-    if (user) {
-      if (user.password === password) {
-        console.log("Correct");
-        staffview();
-        // Password is correct, login successful
-      } else {
-        // Password is incorrect
-        console.log("Incorrect password. Please try again.");
-      }
-    } else {
-      // User with the provided username not found
-      console.log("User not found. Please check your username.");
-    }
-  }
   function staffview() {
     const drinkHeading = document.querySelector("h2");
     drinkHeading.textContent = "ORDERS";
@@ -97,4 +66,13 @@ $(document).ready(function () {
     console.log(orders);
     displayOrders(orders);
   }
+
+  // CREDENTIAL VALUE 0
+  function managerview() {}
+
+  // CREDENTIAL VALUE 1
+  function bartenderview() {}
+
+  // CREDENTIAL VALUE 2
+  function waitressview() {}
 });
