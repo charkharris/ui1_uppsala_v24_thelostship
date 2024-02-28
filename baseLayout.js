@@ -1,13 +1,13 @@
 // combined.js
-document.addEventListener("DOMContentLoaded", function() {
-    // HTML content as a template string
-    const htmlContent = `
+document.addEventListener("DOMContentLoaded", function () {
+  // HTML content as a template string
+  const htmlContent = `
         <header>
             <div>
                 <img src="profile-icon.png" alt="Profile Icon" />
                 <span class="profile-icon">P</span>
             </div>
-            <div>
+            <div class ="logClass"> 
                 <span class="language-icon">Language</span>
                 <span class="log"></span>
         
@@ -75,6 +75,6 @@ document.addEventListener("DOMContentLoaded", function() {
     </main>
     `;
 
-    // Inject the HTML content into the body
-    document.body.innerHTML = htmlContent;
+  // Inject the HTML content into the body
+  document.body.innerHTML = htmlContent;
 });

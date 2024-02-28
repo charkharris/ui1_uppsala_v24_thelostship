@@ -1,6 +1,10 @@
 $(document).ready(function () {
-  const logSpan = document.querySelector(".log");
+  mainDriver();
+});
 
+function mainDriver() {
+  const logSpan = document.querySelector(".log");
+  //$(".logClass").empty();
   logSpan.textContent = "Login";
   logSpan.addEventListener("click", function () {
     // Prompt the user for username and password
@@ -141,7 +145,7 @@ $(document).ready(function () {
 
   const spiritsArray = DB2.spirits;
   let orders = JSON.parse(localStorage.getItem("orders")) || [];
-  localStorage.clear();
+  //localStorage.clear();
 
   // Function to filter spirits based on category
   function filterSpirits(category) {
@@ -414,9 +418,9 @@ $(document).ready(function () {
     return `
             <div class="modal-body">
                 <div class="left-column">
-                    <img class="modal-item-image" src="${
-                      item.imageSrc
-                    }" alt="${item.name}" style="width:100%; max-width: 100%; height:auto; display:block; margin-bottom: 1rem;"/>
+                    <img class="modal-item-image" src="${item.imageSrc}" alt="${
+      item.name
+    }" style="width:100%; max-width: 100%; height:auto; display:block; margin-bottom: 1rem;"/>
                     <p class="modal-item-description" style="text-align:center;">${
                       item.description
                     }</p>
@@ -521,4 +525,5 @@ $(document).ready(function () {
 
   displayItemsByCategory();
   drinksDrag();
-});
+}
+//});
