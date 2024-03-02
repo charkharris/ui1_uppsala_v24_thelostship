@@ -3,6 +3,11 @@ $(document).ready(function () {
 });
 
 function mainDriver() {
+  let history = [];
+  let currentPosition = -1;
+
+  // Function to add item to cart
+
   const logSpan = document.querySelector(".log");
   //$(".logClass").empty();
   logSpan.textContent = "Login";
@@ -39,8 +44,6 @@ function mainDriver() {
   }
 
   function displayItemsByCategory() {
-    const spiritsArray = DB2.spirits;
-
     const categories = DB2.spirits.reduce((acc, curr) => {
       if (!acc.includes(curr.varugrupp)) {
         acc.push(curr.varugrupp);
@@ -50,6 +53,106 @@ function mainDriver() {
 
     const newTitle = "Drinks by Category";
     const $titleElement = $("<h1>").text(newTitle);
+    let history = [];
+    let currentPosition = -1;
+
+    // Function to add item to cart
+    function addItemToCart(spirit) {
+      const $cartItem = $("<div id='cart-item'>").text(
+        spirit.namn + " - " + spirit.prisinklmoms + "kr"
+      );
+      const $trashButton = $("<button>").addClass("trash-button");
+
+      // Add Font Awesome icon to the button
+      const $trashIcon = $("<i>").addClass("fa fa-trash");
+
+      // Append the icon to the button
+      $trashButton.append($trashIcon);
+
+      // Append the button to the cart item
+      $cartItem.append($trashButton);
+      $("#order-container").append($cartItem);
+
+      // Push the action to history
+      history.push({ action: "add", spirit: spirit });
+      currentPosition = history.length - 1;
+      $(".trash-button").click(function () {
+        // Your onclick function logic here
+        console.log("hello");
+        $(this).closest("#cart-item").remove();
+      });
+    }
+
+    function clearCart() {
+      // Store a copy of all items in the cart
+      const itemsInCart = $("#order-container").children().clone();
+
+      // Clear the cart
+      $("#order-container").empty();
+
+      // Push the action to history
+      history.push({ action: "clear", items: itemsInCart });
+      currentPosition = history.length - 1;
+    }
+    function removeItemFromCart() {
+      // Find the closest #cart-item relative to the clicked trash button
+
+      // Get the last action from history
+      const lastAction = history[currentPosition];
+
+      // Push the action to history
+      history.push({ action: "remove", spirit: lastAction.spirit });
+      currentPosition = history.length - 1;
+    }
+
+    function undoAction() {
+      if (currentPosition >= 0) {
+        const action = history[currentPosition];
+        console.log(action);
+        if (action.action === "clear") {
+          // If last action was 'clear', add the items back to the cart
+          $("#order-container").append(action.items);
+        } else if (action.action === "add") {
+          // If last action was 'add', remove the item
+          $("#order-container").children().last().remove();
+        } else if (action.action === "remove") {
+          // If last action was 'remove', add the item back
+          const $cartItem = $("<div id='cart-item'>").text(
+            action.spirit.namn + " - " + action.spirit.prisinklmoms + "kr"
+          );
+          const $trashButton = $("<button>").addClass("trash-button");
+          const $trashIcon = $("<i>").addClass("fa fa-trash");
+          $trashButton.append($trashIcon);
+          $cartItem.append($trashButton);
+          $("#order-container").append($cartItem);
+        }
+        currentPosition--;
+      }
+    }
+
+    function redoAction() {
+      if (currentPosition < history.length - 1) {
+        currentPosition++;
+        const action = history[currentPosition];
+        if (action.action === "clear") {
+          // If next action is 'clear', clear the cart again
+          $("#order-container").empty();
+        } else if (action.action === "add") {
+          // If next action is 'add', add the item
+          const $cartItem = $("<div id='cart-item'>").text(
+            action.spirit.namn + " - " + action.spirit.prisinklmoms + "kr"
+          );
+          const $trashButton = $("<button>").addClass("trash-button");
+          const $trashIcon = $("<i>").addClass("fa fa-trash");
+          $trashButton.append($trashIcon);
+          $cartItem.append($trashButton);
+          $("#order-container").append($cartItem);
+        } else if (action.action === "remove") {
+          // If next action is 'remove', remove the item
+          $("#order-container").children().last().remove();
+        }
+      }
+    }
 
     $("#title-container").empty().append($titleElement);
     $("#drink-name").empty();
@@ -70,41 +173,63 @@ function mainDriver() {
             'url("images/' + spirit.namn + '.png")'
           );
           $nameElement.append($imageContainer);
+
+          // Combine name and price in the same div
           const spiritInfo = spirit.namn + " - " + spirit.prisinklmoms + "kr";
           $nameElement.append(
             $("<p>", { class: "spirit-info" }).text(spiritInfo)
           );
+
           const $addToCartButton = $("<button>").text("Add to Cart");
           $nameElement.append($addToCartButton);
 
-          //add to cart button functionality
+          // Add to cart button functionality
           $addToCartButton.click(function () {
-            const $cartItem = $("<div id = cart-item>").text(
-              spirit.namn + " - " + spirit.prisinklmoms + "kr"
-            );
-
-            //create a delete button for every item placed in the order
-            const $trashButton = $("<button>").addClass("trash-button");
-            const $trashIcon = $("<i>").addClass("fa fa-trash");
-            $trashButton.append($trashIcon);
-
-            // Append the button to the cart item
-            $cartItem.append($trashButton);
-            $("#order-container").append($cartItem);
+            addItemToCart(spirit);
           });
 
-          //Combine name and price in the same div
-          // const spiritInfo = spirit.namn + " - " + spirit.prisinklmoms + "kr";
-          // $nameElement.append(
-          //   $("<p>", { class: "spirit-info" }).text(spiritInfo)
-          // );
-          // $nameElement.append($addToCartButton);
-
+          // Append name element to drink-name
           $("#drink-name").append($nameElement);
         });
       }
     });
 
+    const $clearOrderButton = $("<button>").append(
+      '<i class="fas fa-trash-alt" id = "clear-order-button"></i>'
+    );
+    // Event handler for clear order button click
+    $clearOrderButton.click(function () {
+      clearCart();
+    });
+
+    // Append clear order button to clear-order element
+    $("#clear-order").append($clearOrderButton);
+
+    // Undo button
+
+    // Undo button
+    const $undoButton = $("<button>").text("Undo");
+    $undoButton.attr("id", "undo-button");
+
+    // Append undo button to submit-order element
+    $("#submit-order").append($undoButton);
+
+    // Undo button click event handler
+    $undoButton.click(function () {
+      undoAction();
+    });
+
+    // Redo button
+    const $redoButton = $("<button>").text("Redo");
+    $redoButton.attr("id", "redo-button");
+
+    // Append redo button to submit-order element
+    $("#submit-order").append($redoButton);
+
+    // Redo button click event handler
+    $redoButton.click(function () {
+      redoAction();
+    });
     drinksDrag();
   }
 
@@ -144,9 +269,9 @@ function mainDriver() {
   }
 
   const spiritsArray = DB2.spirits;
-  let orders = JSON.parse(localStorage.getItem("orders")) || [];
+  let savedOrders = JSON.parse(localStorage.getItem("orders")) || [];
   //localStorage.clear();
-
+  var orders = [];
   // Function to filter spirits based on category
   function filterSpirits(category) {
     const matchingSpirits = spiritsArray.filter(
@@ -264,10 +389,11 @@ function mainDriver() {
     newOrder.items.push(`${"Total"}  - ${totalOrderPrice.toFixed(2)}kr `);
 
     // Push the new order object to the orders array
-    orders.push(newOrder);
 
+    orders.push(newOrder);
+    savedOrders.push(newOrder);
     // Update localStorage with the updated orders array
-    localStorage.setItem("orders", JSON.stringify(orders));
+    localStorage.setItem("orders", JSON.stringify(savedOrders));
 
     alert("Order submitted!");
     // Clear the cart after submission
@@ -281,14 +407,14 @@ function mainDriver() {
 
   $("#submit-order").append($submitOrderButton);
 
-  const $clearOrderButton = $("<button>").append(
-    '<i class="fas fa-trash-alt" id = "clear-order-button"></i>'
-  );
-  $clearOrderButton.click(function () {
-    // Clear the cart
-    $("#order-container").empty();
-  });
-  $("#clear-order").append($clearOrderButton);
+  // const $clearOrderButton = $("<button>").append(
+  //   '<i class="fas fa-trash-alt" id = "clear-order-button"></i>'
+  // );
+  // $clearOrderButton.click(function () {
+  //   // Clear the cart
+  //   $("#order-container").empty();
+  // });
+  // $("#clear-order").append($clearOrderButton);
 
   // Function to display orders
   function displayOrders(orders) {
@@ -478,13 +604,10 @@ function mainDriver() {
             spirit.namn + " - " + spirit.prisinklmoms + "kr"
           );
           const $trashButton = $("<button>").addClass("trash-button");
-
           // Add Font Awesome icon to the button
           const $trashIcon = $("<i>").addClass("fa fa-trash");
-
           // Append the icon to the button
           $trashButton.append($trashIcon);
-
           // Append the button to the cart item
           $cartItem.append($trashButton);
           $("#order-container").append($cartItem);
@@ -526,4 +649,5 @@ function mainDriver() {
   displayItemsByCategory();
   drinksDrag();
 }
+
 //});

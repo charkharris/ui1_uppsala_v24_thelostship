@@ -4,15 +4,10 @@ function staffview() {
   drinkHeading.textContent = "ORDERS";
   $("#tile-section").empty();
   $(".log").empty();
-  const logSpan = document.querySelector(".logClass");
+  const logSpan = document.querySelector(".log");
+  //$(".logClass").empty();
+  logSpan.textContent = "Logout";
 
-  const logoutButton = document.createElement("button");
-  logoutButton.textContent = "Logout";
-  logoutButton.setAttribute("id", "logoutButton");
-
-  logSpan.appendChild(logoutButton);
-
-  const logOut = document.getElementById("logoutButton");
   const home = document.querySelector("#home");
   home.textContent = "Orders";
 
@@ -22,7 +17,7 @@ function staffview() {
   const alcoholfreeToEpmty = document.querySelector("#alcoholfree");
   alcoholfreeToEpmty.textContent = "";
 
-  logoutButton.addEventListener("click", function () {
+  logSpan.addEventListener("click", function () {
     // Prompt the user for username and password
 
     location.reload();
