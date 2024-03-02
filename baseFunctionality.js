@@ -43,6 +43,106 @@ function mainDriver() {
     }
   }
 
+  function addItemToCart(spirit) {
+    // Check if the maximum number of items in the cart has been reached
+    if ($("#order-container").children().length >= 10) {
+      alert("Maximum number of items reached!");
+      return; // Exit the function
+    }
+
+    const $cartItem = $("<div id='cart-item'>").text(
+      spirit.namn + " - " + spirit.prisinklmoms + "kr"
+    );
+    const $trashButton = $("<button>").addClass("trash-button");
+
+    // Add Font Awesome icon to the button
+    const $trashIcon = $("<i>").addClass("fa fa-trash");
+
+    // Append the icon to the button
+    $trashButton.append($trashIcon);
+
+    // Append the button to the cart item
+    $cartItem.append($trashButton);
+    $("#order-container").append($cartItem);
+
+    // Push the action to history
+    history.push({ action: "add", spirit: spirit });
+    currentPosition = history.length - 1;
+    $(".trash-button").click(function () {
+      // Your onclick function logic here
+      console.log("hello");
+      $(this).closest("#cart-item").remove();
+    });
+  }
+
+  function clearCart() {
+    // Store a copy of all items in the cart
+    const itemsInCart = $("#order-container").children().clone();
+
+    // Clear the cart
+    $("#order-container").empty();
+
+    // Push the action to history
+    history.push({ action: "clear", items: itemsInCart });
+    currentPosition = history.length - 1;
+  }
+  function removeItemFromCart() {
+    const lastAction = history[currentPosition];
+
+    // Push the action to history
+    history.push({ action: "remove", spirit: lastAction.spirit });
+    currentPosition = history.length - 1;
+  }
+
+  function undoAction() {
+    if (currentPosition >= 0) {
+      const action = history[currentPosition];
+      console.log(action);
+      if (action.action === "clear") {
+        // If last action was 'clear', add the items back to the cart
+        $("#order-container").append(action.items);
+      } else if (action.action === "add") {
+        // If last action was 'add', remove the item
+        $("#order-container").children().last().remove();
+      } else if (action.action === "remove") {
+        // If last action was 'remove', add the item back
+        const $cartItem = $("<div id='cart-item'>").text(
+          action.spirit.namn + " - " + action.spirit.prisinklmoms + "kr"
+        );
+        const $trashButton = $("<button>").addClass("trash-button");
+        const $trashIcon = $("<i>").addClass("fa fa-trash");
+        $trashButton.append($trashIcon);
+        $cartItem.append($trashButton);
+        $("#order-container").append($cartItem);
+      }
+      currentPosition--;
+    }
+  }
+
+  function redoAction() {
+    if (currentPosition < history.length - 1) {
+      currentPosition++;
+      const action = history[currentPosition];
+      if (action.action === "clear") {
+        // If next action is 'clear', clear the cart again
+        $("#order-container").empty();
+      } else if (action.action === "add") {
+        // If next action is 'add', add the item
+        const $cartItem = $("<div id='cart-item'>").text(
+          action.spirit.namn + " - " + action.spirit.prisinklmoms + "kr"
+        );
+        const $trashButton = $("<button>").addClass("trash-button");
+        const $trashIcon = $("<i>").addClass("fa fa-trash");
+        $trashButton.append($trashIcon);
+        $cartItem.append($trashButton);
+        $("#order-container").append($cartItem);
+      } else if (action.action === "remove") {
+        // If next action is 'remove', remove the item
+        $("#order-container").children().last().remove();
+      }
+    }
+  }
+
   function displayItemsByCategory() {
     const categories = DB2.spirits.reduce((acc, curr) => {
       if (!acc.includes(curr.varugrupp)) {
@@ -57,102 +157,6 @@ function mainDriver() {
     let currentPosition = -1;
 
     // Function to add item to cart
-    function addItemToCart(spirit) {
-      const $cartItem = $("<div id='cart-item'>").text(
-        spirit.namn + " - " + spirit.prisinklmoms + "kr"
-      );
-      const $trashButton = $("<button>").addClass("trash-button");
-
-      // Add Font Awesome icon to the button
-      const $trashIcon = $("<i>").addClass("fa fa-trash");
-
-      // Append the icon to the button
-      $trashButton.append($trashIcon);
-
-      // Append the button to the cart item
-      $cartItem.append($trashButton);
-      $("#order-container").append($cartItem);
-
-      // Push the action to history
-      history.push({ action: "add", spirit: spirit });
-      currentPosition = history.length - 1;
-      $(".trash-button").click(function () {
-        // Your onclick function logic here
-        console.log("hello");
-        $(this).closest("#cart-item").remove();
-      });
-    }
-
-    function clearCart() {
-      // Store a copy of all items in the cart
-      const itemsInCart = $("#order-container").children().clone();
-
-      // Clear the cart
-      $("#order-container").empty();
-
-      // Push the action to history
-      history.push({ action: "clear", items: itemsInCart });
-      currentPosition = history.length - 1;
-    }
-    function removeItemFromCart() {
-      // Find the closest #cart-item relative to the clicked trash button
-
-      // Get the last action from history
-      const lastAction = history[currentPosition];
-
-      // Push the action to history
-      history.push({ action: "remove", spirit: lastAction.spirit });
-      currentPosition = history.length - 1;
-    }
-
-    function undoAction() {
-      if (currentPosition >= 0) {
-        const action = history[currentPosition];
-        console.log(action);
-        if (action.action === "clear") {
-          // If last action was 'clear', add the items back to the cart
-          $("#order-container").append(action.items);
-        } else if (action.action === "add") {
-          // If last action was 'add', remove the item
-          $("#order-container").children().last().remove();
-        } else if (action.action === "remove") {
-          // If last action was 'remove', add the item back
-          const $cartItem = $("<div id='cart-item'>").text(
-            action.spirit.namn + " - " + action.spirit.prisinklmoms + "kr"
-          );
-          const $trashButton = $("<button>").addClass("trash-button");
-          const $trashIcon = $("<i>").addClass("fa fa-trash");
-          $trashButton.append($trashIcon);
-          $cartItem.append($trashButton);
-          $("#order-container").append($cartItem);
-        }
-        currentPosition--;
-      }
-    }
-
-    function redoAction() {
-      if (currentPosition < history.length - 1) {
-        currentPosition++;
-        const action = history[currentPosition];
-        if (action.action === "clear") {
-          // If next action is 'clear', clear the cart again
-          $("#order-container").empty();
-        } else if (action.action === "add") {
-          // If next action is 'add', add the item
-          const $cartItem = $("<div id='cart-item'>").text(
-            action.spirit.namn + " - " + action.spirit.prisinklmoms + "kr"
-          );
-          const $trashButton = $("<button>").addClass("trash-button");
-          const $trashIcon = $("<i>").addClass("fa fa-trash");
-          $trashButton.append($trashIcon);
-          $cartItem.append($trashButton);
-          $("#order-container").append($cartItem);
-        } else if (action.action === "remove") {
-          // If next action is 'remove', remove the item
-          $("#order-container").children().last().remove();
-        }
-      }
-    }
 
     $("#title-container").empty().append($titleElement);
     $("#drink-name").empty();
@@ -185,6 +189,7 @@ function mainDriver() {
 
           // Add to cart button functionality
           $addToCartButton.click(function () {
+            console.log(spirit);
             addItemToCart(spirit);
           });
 
@@ -194,45 +199,45 @@ function mainDriver() {
       }
     });
 
-    const $clearOrderButton = $("<button>").append(
-      '<i class="fas fa-trash-alt" id = "clear-order-button"></i>'
-    );
-    // Event handler for clear order button click
-    $clearOrderButton.click(function () {
-      clearCart();
-    });
-
-    // Append clear order button to clear-order element
-    $("#clear-order").append($clearOrderButton);
-
-    // Undo button
-
-    // Undo button
-    const $undoButton = $("<button>").text("Undo");
-    $undoButton.attr("id", "undo-button");
-
-    // Append undo button to submit-order element
-    $("#submit-order").append($undoButton);
-
-    // Undo button click event handler
-    $undoButton.click(function () {
-      undoAction();
-    });
-
-    // Redo button
-    const $redoButton = $("<button>").text("Redo");
-    $redoButton.attr("id", "redo-button");
-
-    // Append redo button to submit-order element
-    $("#submit-order").append($redoButton);
-
-    // Redo button click event handler
-    $redoButton.click(function () {
-      redoAction();
-    });
     drinksDrag();
   }
 
+  const $clearOrderButton = $("<button>").append(
+    '<i class="fas fa-trash-alt" id = "clear-order-button"></i>'
+  );
+  // Event handler for clear order button click
+  $clearOrderButton.click(function () {
+    clearCart();
+  });
+
+  // Append clear order button to clear-order element
+  $("#clear-order").append($clearOrderButton);
+
+  // Undo button
+
+  // Undo button
+  const $undoButton = $("<button>").text("Undo");
+  $undoButton.attr("id", "undo-button");
+
+  // Append undo button to submit-order element
+  $("#submit-order").append($undoButton);
+
+  // Undo button click event handler
+  $undoButton.click(function () {
+    undoAction();
+  });
+
+  // Redo button
+  const $redoButton = $("<button>").text("Redo");
+  $redoButton.attr("id", "redo-button");
+
+  // Append redo button to submit-order element
+  $("#submit-order").append($redoButton);
+
+  // Redo button click event handler
+  $redoButton.click(function () {
+    redoAction();
+  });
   const homeCategory = document.getElementById("home");
 
   homeCategory.addEventListener("click", function () {
@@ -295,22 +300,7 @@ function mainDriver() {
         // Add button to add to cart
         const $addToCartButton = $("<button>").text("Add to Cart");
         $addToCartButton.click(function () {
-          // Add spirit to cart
-
-          const $cartItem = $("<div id = cart-item>").text(
-            spirit.namn + " - " + spirit.prisinklmoms + "kr"
-          );
-          const $trashButton = $("<button>").addClass("trash-button");
-
-          // Add Font Awesome icon to the button
-          const $trashIcon = $("<i>").addClass("fa fa-trash");
-
-          // Append the icon to the button
-          $trashButton.append($trashIcon);
-
-          // Append the button to the cart item
-          $cartItem.append($trashButton);
-          $("#order-container").append($cartItem);
+          addItemToCart(spirit);
         });
 
         //Combine name and price in the same div
@@ -339,67 +329,74 @@ function mainDriver() {
   // Add submit order button to cart
   const $submitOrderButton = $("<button>")
     .attr("id", "purchase-btn")
-    .text("Pruchase");
+    .text("Purchase");
+
   $submitOrderButton.click(function () {
-    // Implement order submission logic here
     const cartItems = $("#order-container")
       .children()
       .toArray()
       .map((item) => $(item).text());
 
-    // Define the status for the new order
     const status = "Received";
 
-    // Create an object representing the order with items and status
     const newOrder = {
       items: [],
       status: status,
     };
 
-    // Create a map to store item counts and total price
     const itemInfo = {};
 
-    // Loop through cart items
+    let totalOrderPrice = 0;
+
     cartItems.forEach((item) => {
       const [itemName, itemPrice] = item.split(" - ");
-      if (itemInfo.hasOwnProperty(itemName)) {
-        // Increment the counter for the item
+      const spirit = DB2.spirits.find((s) => s.namn === itemName);
+      if (spirit) {
+        // Decrement the stock for the item
+        spirit.stock--;
 
-        itemInfo[itemName].count++;
-        itemInfo[itemName].totalPrice += parseFloat(itemPrice);
-      } else {
-        // Initialize the counter for the item
-        itemInfo[itemName] = {
-          count: 1,
-          totalPrice: parseFloat(itemPrice),
-        };
+        // Update the total price for the order
+        totalOrderPrice += parseFloat(itemPrice);
+
+        // Update itemInfo object
+        if (itemInfo.hasOwnProperty(itemName)) {
+          itemInfo[itemName].count++;
+          itemInfo[itemName].totalPrice += parseFloat(itemPrice);
+        } else {
+          itemInfo[itemName] = {
+            count: 1,
+            totalPrice: parseFloat(itemPrice),
+          };
+        }
       }
     });
-    console.log(itemInfo);
-    let totalOrderPrice = 0;
-    // Add items to the new order with counters and total price
+
     Object.entries(itemInfo).forEach(([itemName, info]) => {
       const totalPrice = info.totalPrice;
-      totalOrderPrice += info.totalPrice;
-      console.log(totalOrderPrice);
       newOrder.items.push(
         `${"'" + itemName + "'"} x${info.count} - ${totalPrice.toFixed(2)}kr `
       );
     });
+
     newOrder.items.push(`${"Total"}  - ${totalOrderPrice.toFixed(2)}kr `);
 
     // Push the new order object to the orders array
-
     orders.push(newOrder);
     savedOrders.push(newOrder);
+
     // Update localStorage with the updated orders array
     localStorage.setItem("orders", JSON.stringify(savedOrders));
 
+    // Update DB2.spirits in localStorage with adjusted stock numbers
+    localStorage.setItem("spirits", JSON.stringify(DB2.spirits));
+
     alert("Order submitted!");
+
     // Clear the cart after submission
     $("#order-container").empty();
 
-    // Display orders in console
+    // Update the display of the cart
+    displayCart();
 
     // Display orders at the bottom of the page
     displayOrders(orders);
@@ -598,19 +595,7 @@ function mainDriver() {
         // Add button to add to cart
         const $addToCartButton = $("<button>").text("Add to Cart");
         $addToCartButton.click(function () {
-          // Add spirit to cart
-
-          const $cartItem = $("<div id = cart-item>").text(
-            spirit.namn + " - " + spirit.prisinklmoms + "kr"
-          );
-          const $trashButton = $("<button>").addClass("trash-button");
-          // Add Font Awesome icon to the button
-          const $trashIcon = $("<i>").addClass("fa fa-trash");
-          // Append the icon to the button
-          $trashButton.append($trashIcon);
-          // Append the button to the cart item
-          $cartItem.append($trashButton);
-          $("#order-container").append($cartItem);
+          addItemToCart(spirit);
         });
 
         // Add "Show Details" button

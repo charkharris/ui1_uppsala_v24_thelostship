@@ -89,10 +89,13 @@ function staffview() {
     $("#tile-section").empty();
     const newTitle = "Alcoholic";
     const $newTitleElement = $("<h1>").text(newTitle);
-    $("#tile-section").empty().append($newTitleElement);
+    $("#tile-section").append($newTitleElement);
 
-    DB2.spirits.forEach((spirit) => {
-      //spirit.namn = decodeURIComponent(escape(spirit.namn));
+    // Retrieve spirits from local storage
+    const storedSpirits = JSON.parse(localStorage.getItem("spirits"));
+
+    storedSpirits.forEach((spirit) => {
+      // Create a container for each spirit
       const $spiritElement = $("<div>", { class: "spirit" });
 
       // Add image container
@@ -103,7 +106,7 @@ function staffview() {
       );
       $spiritElement.append($imageContainer);
 
-      // Prepare spirit information excluding stock number
+      // Prepare spirit information including stock number
       const spiritInfo = spirit.namn + " - " + spirit.prisinklmoms + "kr";
       $spiritElement.append(
         $("<p>", { class: "spirit-info" }).text(spiritInfo)
@@ -113,17 +116,24 @@ function staffview() {
       const $stockInput = $("<input>", {
         type: "number",
         value: spirit.stock,
-        id: "stock_" + spirit.id, // Assuming each spirit has an id property
+        id: "stock_" + spirit.nr, // Assuming each spirit has an nr property
       });
       $stockInput.on("input", function () {
-        // Update the stock number in the spirits array when input changes
+        // Update the stock number in the stored spirits array when input changes
         spirit.stock = parseInt($(this).val());
       });
       $spiritElement.append($("<label>").text("Stock: ").append($stockInput));
 
-      // Append $spiritElement to the drink-name div
+      // Append $spiritElement to the tile section
       $("#tile-section").append($spiritElement);
-      // Append the button to the DOM
+
+      // Check if stock is below 5 and display message
+      if (spirit.stock < 5) {
+        const $lowStockMessage = $("<p>")
+          .text("Low stock!")
+          .addClass("low-stock-message");
+        $spiritElement.append($lowStockMessage);
+      }
     });
 
     const $updateStockButton = $("<button>", {
@@ -133,8 +143,9 @@ function staffview() {
 
     $("#tile-section").append($updateStockButton);
     $updateStockButton.on("click", function () {
-      updateStockValues(DB2.spirits);
+      updateStockValues(storedSpirits);
     });
+
     function updateStockValues(spirits) {
       spirits.forEach((spirit) => {
         const stockInputValue = parseInt($("#stock_" + spirit.nr).val());
@@ -143,6 +154,8 @@ function staffview() {
         }
       });
       // Optionally, you can perform further actions after updating the stock values
+      // Update the local storage with the updated spirits
+      localStorage.setItem("spirits", JSON.stringify(spirits));
     }
   });
 }
