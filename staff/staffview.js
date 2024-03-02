@@ -23,7 +23,6 @@ function staffview() {
     location.reload();
   });
   function displayOrders(orders) {
-    // Clear everything inside the div
     $("#tile-section").empty();
 
     // Create a table element
@@ -34,6 +33,8 @@ function staffview() {
     $headerRow.append($("<th>").text("Order Number"));
     $headerRow.append($("<th>").text("Items"));
     $headerRow.append($("<th>").text("Status"));
+    $headerRow.append($("<th>").text("Total")); // Original total column
+    $headerRow.append($("<th>").text("Split Total")); // New header for split total
     $table.append($headerRow);
 
     // Define the status options
@@ -67,8 +68,45 @@ function staffview() {
       const $statusCell = $("<td>").append($statusSelect);
       $orderRow.append($statusCell);
 
+      // Extract the total from the items array
+      const totalItem = order.items.find((item) => item.startsWith("Total"));
+      const total = totalItem ? totalItem.split(" - ")[1] : "0.00";
+      const $totalCell = $("<td>").text(total); // Display the total in the table
+      $orderRow.append($totalCell);
+
+      // Create input field for number of people to split the total
+      const $splitInput = $("<input>", {
+        type: "number",
+        min: 1, // Minimum number of people is 1
+        placeholder: "Enter number of people",
+        class: "split-input", // Add a class to easily select these inputs later
+      });
+      const $splitTotalCell = $("<td>")
+        .append($splitInput)
+        .addClass("split-total-cell"); // Add a class to easily select this cell
+      $orderRow.append($splitTotalCell);
+
+      // Create a button to show split total
+      const $showSplitTotalButton = $("<button>").text("Show");
+      const $showSplitTotalCell = $("<td>")
+        .append($showSplitTotalButton)
+        .addClass("show-split-total-cell"); // Add a class to easily select this cell
+      $orderRow.append($showSplitTotalCell);
+
       // Append the row to the table
       $table.append($orderRow);
+
+      // Add event listener to the button to display split total
+      $showSplitTotalButton.on("click", function () {
+        const numberOfPeople = parseInt($splitInput.val());
+        const splitTotal = numberOfPeople
+          ? (parseFloat(total) / numberOfPeople).toFixed(2)
+          : "0.00";
+        $(this)
+          .closest("tr")
+          .find(".split-total-cell")
+          .text(splitTotal + " kr"); // Update the split total cell
+      });
     });
 
     // Append the table to the tile-section div
