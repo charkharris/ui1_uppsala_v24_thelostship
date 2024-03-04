@@ -1,4 +1,5 @@
 function vipview() {
+  $("#order-details").empty();
   const drinkHeading = document.querySelector("h2");
   drinkHeading.textContent = "VIP VIEW";
   $(".log").empty();
