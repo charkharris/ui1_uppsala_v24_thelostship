@@ -1,3 +1,28 @@
+#new-purchase-btn {
+  background: #802021;
+  background-image: -webkit-linear-gradient(top, #b85d18, #6b400a);
+  background-image: -moz-linear-gradient(top, #b85d18, #6b400a);
+  background-image: -ms-linear-gradient(top, #b85d18, #6b400a);
+  background-image: -o-linear-gradient(top, #b85d18, #6b400a);
+  background-image: linear-gradient(to bottom, #b85d18, #6b400a);
+  -webkit-border-radius: 10;
+  -moz-border-radius: 10;
+  border-radius: 10px;
+  font-family: Arial;
+  color: #fcfcfc;
+  font-size: 27px;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+  position: absolute;
+  bottom: 100px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+#new-purchase-btn:hover {
+  background: #965d02;
+  text-decoration: none;
+}
 #purchase-btn {
   background: #802021;
   background-image: -webkit-linear-gradient(top, #b85d18, #6b400a);
@@ -76,17 +101,17 @@
   cursor: pointer;
 }
 .image-container {
-  width: 150px; 
-  height: 150px; 
-  background-size: cover; 
-  background-position: center; 
-  border: 1px solid #ccc; 
+  width: 150px;
+  height: 150px;
+  background-size: cover;
+  background-position: center;
+  border: 1px solid #ccc;
   background-size: contain;
   margin: auto;
   text-align: center;
 }
 .category {
-  cursor: pointer; 
+  cursor: pointer;
 }
 
 body {
@@ -230,23 +255,31 @@ footer {
   width: 100%;
   height: 100%;
   overflow: auto;
-  background-color: rgba(0,0,0,0.4);
+  background-color: rgba(0, 0, 0, 0.4);
 
   animation: fadeIn 1s;
   animation: fadeOut 1s;
 }
 
 @keyframes fadeIn {
-from {opacity: 0;}
-to {opacity: 1;}
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes fadeIn {
-from {opacity: 0;}
-to {opacity:1 ;}
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
-.modal-content{
+.modal-content {
   background-color: #ffffff;
   position: fixed;
   top: 50%;
@@ -274,7 +307,8 @@ to {opacity:1 ;}
   display: flex;
 }
 
-.left-column, .right-column {
+.left-column,
+.right-column {
   flex-basis: 50%;
   padding: 10px;
   box-sizing: border-box;
@@ -295,7 +329,6 @@ to {opacity:1 ;}
   align-self: center;
 }
 
-
 .modal-close {
   color: #aaa;
   float: right;
@@ -305,7 +338,9 @@ to {opacity:1 ;}
   margin-left: auto;
 }
 
-.modal-close:hover, .modal-close:focus {
-  color: black; text-decoration: none;
+.modal-close:hover,
+.modal-close:focus {
+  color: black;
+  text-decoration: none;
   cursor: pointer;
 }

@@ -27,10 +27,18 @@ function mainDriver() {
     // Check if a user with the provided username exists
     if (user) {
       if (user.password === password) {
-        console.log("Correct");
+        console.log(user.credentials);
+        console.log(user.username);
         // Show staff view for staff members only
-        if (user.credentials == "0" || "1" || "2") {
+        if (
+          user.credentials === "0" ||
+          user.credentials === "1" ||
+          user.credentials === "2"
+        ) {
+          console.log("hr");
           staffview();
+        } else if (user.credentials === "3") {
+          vipview();
         }
         // Password is correct, login successful
       } else {
@@ -245,7 +253,53 @@ function mainDriver() {
     drinksDrag();
   });
 
+  //function drinksDrag() {
+  //  // Make orders draggable
+  //  $(".spirit").draggable({
+  //    helper: "clone",
+  //    revert: "invalid",
+  //  });
+  //
+  //  // Make cart droppable
+  //  $("#right-panel").droppable({
+  //    accept: ".spirit",
+  //    drop: function (event, ui) {
+  //      const droppedItemText = ui.draggable.find(".spirit-info").text();
+  //      const $cartItem = $("<div id = cart-item>").text(droppedItemText);
+  //      const $trashButton = $("<button>").addClass("trash-button");
+  //
+  //      // Add Font Awesome icon to the button
+  //      const $trashIcon = $("<i>").addClass("fa fa-trash");
+  //
+  //      // Append the icon to the button
+  //      $trashButton.append($trashIcon);
+  //
+  //      // Append the button to the cart item
+  //      $cartItem.append($trashButton);
+  //      $("#order-container").append($cartItem);
+  //    },
+  //  });
+  //}
+
+  var droppedItems = [];
+
+  // Function to handle dropping an item
   function drinksDrag() {
+    function handleDrop(event, ui) {
+      const droppedItemText = ui.draggable.find(".spirit-info").text();
+      const $cartItem = $("<div id='cart-item'>").text(droppedItemText);
+      const $trashButton = $("<button>").addClass("trash-button");
+      const $trashIcon = $("<i>").addClass("fa fa-trash");
+
+      $trashButton.append($trashIcon);
+      $cartItem.append($trashButton);
+
+      $("#order-container").append($cartItem);
+
+      // Store the dropped item for undo/redo
+      droppedItems.push($cartItem[0].outerHTML);
+    }
+
     // Make orders draggable
     $(".spirit").draggable({
       helper: "clone",
@@ -255,26 +309,12 @@ function mainDriver() {
     // Make cart droppable
     $("#right-panel").droppable({
       accept: ".spirit",
-      drop: function (event, ui) {
-        const droppedItemText = ui.draggable.find(".spirit-info").text();
-        const $cartItem = $("<div id = cart-item>").text(droppedItemText);
-        const $trashButton = $("<button>").addClass("trash-button");
-
-        // Add Font Awesome icon to the button
-        const $trashIcon = $("<i>").addClass("fa fa-trash");
-
-        // Append the icon to the button
-        $trashButton.append($trashIcon);
-
-        // Append the button to the cart item
-        $cartItem.append($trashButton);
-        $("#order-container").append($cartItem);
-      },
+      drop: handleDrop,
     });
   }
-
   const spiritsArray = DB2.spirits;
   let savedOrders = JSON.parse(localStorage.getItem("orders")) || [];
+  //clear local storage
   //localStorage.clear();
   var orders = [];
   // Function to filter spirits based on category
@@ -396,7 +436,7 @@ function mainDriver() {
     $("#order-container").empty();
 
     // Update the display of the cart
-    displayCart();
+    //displayCart();
 
     // Display orders at the bottom of the page
     displayOrders(orders);
