@@ -469,14 +469,6 @@ function mainDriver() {
     $(this).closest("#cart-item").remove();
   });
 
-  // function to open the modal and display the pop-up window
-  function showModal(details) {
-    var modal = document.getElementById("myModal");
-    var modalText = document.getElementById("modal-body");
-    modal.style.display = "block";
-    modalText.innerHTML = details; // Populate modal with itemDetails
-  }
-
   //close modal
   function hideModal() {
     var modal = document.getElementById("myModal");
@@ -493,29 +485,25 @@ function mainDriver() {
     }
   };
 
-  function showPopup() {
-    // Attach to menu items
-    var menuItems = document.querySelectorAll(".spirit");
-    menuItems.forEach(function (spirit) {
-      spirit.addEventListener("click", function (event) {
-        console.log("Spirit clicked:", spirit.getAttribute("data-id"));
-        // Prevent the click action if it was a drag
-        if (!spirit.classList.contains("ui-draggable-dragging")) {
-          var itemId = spirit.getAttribute("data-id");
-          showModalWithContent("menuItem", itemId);
-        }
-      });
+  function showPopup(){
+   
+    //attach to menu items
+    var menuItems = document.querySelectorAll('.spirit');
+    menuItems.forEach(function(spirit){
+        spirit.addEventListener('click', function(){
+            var itemId = spirit.getAttribute('data-id');
+            showModalWithContent('menuItem', itemId);
+        });
     });
 
-    // Attach to submit order button
-    var submitOrder = document.querySelector(".submit-order");
+    //attach to submit order button
+    var submitOrder = document.querySelector('.submit-order');
     if (submitOrder) {
-      submitOrder.addEventListener("click", function () {
-        console.log("Submit order clicked");
-        showModalWithContent("cart");
-      });
+        submitOrder.addEventListener('click', function(){
+            showModalWithContent('cart');
+        });
     }
-  }
+}
 
   //this function decides what content to show in the modal based on the type of popup required
   function showModalWithContent(popupType, data) {
@@ -638,16 +626,6 @@ function mainDriver() {
           addItemToCart(spirit);
         });
 
-        // Add "Show Details" button
-        const $showDetailsButton = $("<button>").text("Show Details");
-        $showDetailsButton.click(function () {
-          // Code to show modal
-          showModalWithContent("menuItem", spirit);
-        });
-
-        // Append the new button
-        $nameElement.append($showDetailsButton);
-
         // Append the name element to the drinks container
         $("#drink-name").append($nameElement);
 
@@ -673,6 +651,7 @@ function mainDriver() {
 
   displayItemsByCategory();
   drinksDrag();
+  showPopup();
 }
 
 //});
