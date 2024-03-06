@@ -15,7 +15,36 @@ function staffview() {
   alcoholicToStock.textContent = "Stock";
 
   const alcoholfreeToEpmty = document.querySelector("#alcoholfree");
-  alcoholfreeToEpmty.textContent = "";
+  alcoholfreeToEpmty.textContent = "Alcohol";
+
+  //security button code
+    const securityBtn = document.createElement('button');
+    securityBtn.id = 'securityBtn';
+    securityBtn.textContent = 'Security';
+    securityBtn.className = 'security-btn';
+
+    const sidebar = document.querySelector('.sidebar');
+    sidebar.appendChild(securityBtn);
+
+    let pressTimer;
+
+    securityBtn.addEventListener('mousedown', () => {
+      securityBtn.style.transition = 'background-color 3s ease';
+      securityBtn.style.backgroundColor = 'blue';
+    
+      pressTimer = window.setTimeout(() => {
+        alert('Security summoned!');
+        securityBtn.style.backgroundColor = ''; // Reset background color
+        securityBtn.style.transition = ''
+      }, 2000); // Set timeout to 3 seconds
+    });
+    
+    securityBtn.addEventListener('mouseup', () => {
+      clearTimeout(pressTimer); // Clear the timeout
+      securityBtn.style.backgroundColor = ''; // Reset background color
+      securityBtn.style.transition = ''; // Remove the transition
+    });
+
 
   logSpan.addEventListener("click", function () {
     // Prompt the user for username and password

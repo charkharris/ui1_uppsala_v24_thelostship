@@ -158,6 +158,16 @@ main {
   left: 0;
 }
 
+.security-btn{
+  position: absolute;
+  bottom: 50px;
+  transform: translateX(25%);
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
 .right-panel {
   right: 0;
 }
