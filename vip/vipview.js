@@ -3,9 +3,28 @@ function vipview() {
   const drinkHeading = document.querySelector("h2");
   drinkHeading.textContent = "VIP VIEW";
   $(".log").empty();
-  const logSpan = document.querySelector(".log");
-  //$(".logClass").empty();
-  logSpan.textContent = "Logout";
+  $(".logClass").empty();
+
+  var logClassDiv = document.querySelector(".logClass");
+
+  var languageSpan = document.createElement("span");
+  languageSpan.className = "language-icon";
+  languageSpan.textContent = "Language";
+
+  var space = document.createTextNode(" ");
+
+  var logSpan = document.createElement("span");
+  logSpan.className = "log";
+
+  logClassDiv.appendChild(languageSpan);
+  logClassDiv.appendChild(space);
+  logClassDiv.appendChild(logSpan);
+
+  $(".log").text("Logout");
+  $(".log").on("click", function () {
+    // Prompt the user for username and password
+    location.reload(true);
+  });
 
   let savedOrders = JSON.parse(localStorage.getItem("orders")) || [];
   //clear local storage

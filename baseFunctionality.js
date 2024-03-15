@@ -485,25 +485,24 @@ function mainDriver() {
     }
   };
 
-  function showPopup(){
-   
+  function showPopup() {
     //attach to menu items
-    var menuItems = document.querySelectorAll('.spirit');
-    menuItems.forEach(function(spirit){
-        spirit.addEventListener('click', function(){
-            var itemId = spirit.getAttribute('data-id');
-            showModalWithContent('menuItem', itemId);
-        });
+    var menuItems = document.querySelectorAll(".spirit");
+    menuItems.forEach(function (spirit) {
+      spirit.addEventListener("click", function () {
+        var itemId = spirit.getAttribute("data-id");
+        showModalWithContent("menuItem", itemId);
+      });
     });
 
     //attach to submit order button
-    var submitOrder = document.querySelector('.submit-order');
+    var submitOrder = document.querySelector(".submit-order");
     if (submitOrder) {
-        submitOrder.addEventListener('click', function(){
-            showModalWithContent('cart');
-        });
+      submitOrder.addEventListener("click", function () {
+        showModalWithContent("cart");
+      });
     }
-}
+  }
 
   //this function decides what content to show in the modal based on the type of popup required
   function showModalWithContent(popupType, data) {
