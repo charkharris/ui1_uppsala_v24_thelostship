@@ -29,6 +29,8 @@ function staffview() {
   logClassDiv.appendChild(logSpan);
 
   logSpan.textContent = "Logout";
+  // var element = document.getElementById("alcoholfree");
+  // element.textContent = "";
 
   const home = document.querySelector("#home");
   home.textContent = "Orders";
@@ -37,7 +39,7 @@ function staffview() {
   alcoholicToStock.textContent = "Stock";
 
   const alcoholfreeToEpmty = document.querySelector("#alcoholfree");
-  alcoholfreeToEpmty.textContent = "Alcohol";
+  alcoholfreeToEpmty.textContent = "";
 
   //security button code
   const securityBtn = document.createElement("button");

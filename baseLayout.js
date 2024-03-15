@@ -21,8 +21,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     <!-- Sidebar Content -->
                     <p class="category" id="home">Home</p>
                     <p class="category" id="alcoholic">Alcoholic</p>
-                    <p class="category" onclick="showItems('Soft Drink')">Soft Drink</p>
-                    <p class="category" id="alcoholfree">Alcohol Free</p>
+                    
+                    <p class="category" id="alcoholfree"></p>
                 </div>
             </div>
 

@@ -11,6 +11,10 @@ function mainDriver() {
   const logSpan = document.querySelector(".log");
   //$(".logClass").empty();
   logSpan.textContent = "Login";
+  var element = $("#alcoholfree");
+
+  element.text("Alcohol Free");
+
   logSpan.addEventListener("click", function () {
     // Prompt the user for username and password
     const username = prompt("Enter your username:");
@@ -359,7 +363,7 @@ function mainDriver() {
   const alcoholicCategory = document.getElementById("alcoholic");
 
   alcoholicCategory.addEventListener("click", function () {
-    filterSpirits("0");
+    filterSpirits("1");
     const newTitle = "Alcoholic";
     const $newTitleElement = $("<h1>").text(newTitle);
     $("#title-container").empty().append($newTitleElement);
@@ -602,7 +606,7 @@ function mainDriver() {
 
   function filterAlcoholFree(category) {
     const matchingSpirits = spiritsArray.filter(
-      (spirit) => spirit.alkoholhalt === category
+      (spirit) => spirit.alkoholhalt < category
     );
     console.log(category);
     $("#drink-name").empty(); // Clear previous spirits
@@ -642,7 +646,7 @@ function mainDriver() {
   }
 
   nonAlcoholicCategory.addEventListener("click", function () {
-    filterAlcoholFree("0%");
+    filterAlcoholFree("1%");
     const newTitle = "Alcohol Free";
     const $newTitleElement = $("<h1>").text(newTitle);
     $("#title-container").empty().append($newTitleElement);
