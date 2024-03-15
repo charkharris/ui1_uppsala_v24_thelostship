@@ -14,10 +14,11 @@ function mainDriver() {
   var element = $("#alcoholfree");
 
   element.text("Alcohol Free");
+  let username;
 
   logSpan.addEventListener("click", function () {
     // Prompt the user for username and password
-    const username = prompt("Enter your username:");
+    username = prompt("Enter your username:");
     const password = prompt("Enter your password:");
 
     login(username, password);
@@ -31,8 +32,6 @@ function mainDriver() {
     // Check if a user with the provided username exists
     if (user) {
       if (user.password === password) {
-        console.log(user.credentials);
-        console.log(user.username);
         // Show staff view for staff members only
         if (
           user.credentials === "0" ||
@@ -42,7 +41,7 @@ function mainDriver() {
           console.log("hr");
           staffview();
         } else if (user.credentials === "3") {
-          vipview();
+          vipview(username);
         }
         // Password is correct, login successful
       } else {
@@ -435,7 +434,11 @@ function mainDriver() {
     localStorage.setItem("spirits", JSON.stringify(DB2.spirits));
 
     alert("Order submitted!");
-
+    var user = DB.users.find(function (user) {
+      return user.username === username;
+    });
+    user.credit -= totalOrderPrice;
+    console.log(user.credit);
     // Clear the cart after submission
     $("#order-container").empty();
 
@@ -466,6 +469,7 @@ function mainDriver() {
         `Order ${index + 1}: ${order.items.join(", ")}`
       );
       $("#order-details").append($orderItem);
+      console.log($("#order-details"));
     });
   }
 

@@ -19,6 +19,7 @@ var DB = {
       last_name: "Street",
       email: "sulayman.street@it.uu.se",
       phone: "0701517627",
+      credit: "10000",
     },
     {
       user_id: "27",

@@ -1,7 +1,13 @@
-function vipview() {
+function vipview(username1) {
   $("#order-details").empty();
   const drinkHeading = document.querySelector("h2");
-  drinkHeading.textContent = "VIP VIEW";
+  var user = DB.users.find(function (user) {
+    return user.username === username1;
+  });
+  console.log(user);
+  drinkHeading.textContent =
+    "\nWelcome! " + username1 + "\nYour credits: " + user.credit;
+
   $(".log").empty();
   $(".logClass").empty();
 
@@ -103,9 +109,11 @@ function vipview() {
     //displayCart();
 
     // Display orders at the bottom of the page
-    console.log("hello");
+    console.log($("#order-details"));
     $("#order-details").append("Your code is: " + randomNumber);
     //displayOrders(orders);
+    drinkHeading.textContent =
+      "\nWelcome! " + username1 + "\nYour credits: " + user.credit;
   });
   $("#submit-order").append($submitOrderButtonVIP);
 }
