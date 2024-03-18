@@ -32,6 +32,15 @@ function vipview(username1) {
     location.reload(true);
   });
 
+  // add logo
+  const logoImg = document.createElement("img");
+  logoImg.src= "user-circle.png";//logo path
+  logoImg.alt= "Logo";
+
+  //logo in the page
+  const logoContainer = document.getElementById("logo-container");
+  logoContainer.appendChild(logoImg);
+
   let savedOrders = JSON.parse(localStorage.getItem("orders")) || [];
   //clear local storage
   //localStorage.clear();

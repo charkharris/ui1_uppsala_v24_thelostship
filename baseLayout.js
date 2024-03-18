@@ -4,10 +4,14 @@ document.addEventListener("DOMContentLoaded", function () {
   const htmlContent = `
         <header>
             <div>
-                <img src="profile-icon.png" alt="Profile Icon" />
-                <span class="profile-icon">P</span>
+                <img src="images/user-circle.png" alt="Profile Icon" />
+                <span class="user-circle">Customer</span>
             </div>
-            <div class ="logClass"> 
+            <div class="logo-container">
+                <img src="images/flying-dutchmen.png" alt="Flying Dutchman" class="logo">
+            </div>
+            <div class ="logClass">
+                <img src="images/globe-03.png" alt="language Icon" />
                 <span class="log"></span>
             </div>
             <div class="langClass">
