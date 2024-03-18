@@ -8,9 +8,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 <span class="profile-icon">P</span>
             </div>
             <div class ="logClass"> 
-                <span class="language-icon">Language</span>
                 <span class="log"></span>
-        
+            </div>
+            <div class="langClass">
+                <select id="localization-switcher" class="locale-switcher">
+                    <option value="en">English</option>
+                    <option value="se">Swedish</option>
+                    <option value="no">Norwegian</option>
+                </select>
             </div>
         </header>
     
@@ -19,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 <!-- Left Panel Content -->
                 <div class="sidebar">
                     <!-- Sidebar Content -->
-                    <p class="category" id="home">Home</p>
+                    <p class="category" id="home" localization-key="home"></p>
                     <p class="category" id="alcoholic">Alcoholic</p>
                     
                     <p class="category" id="alcoholfree"></p>
