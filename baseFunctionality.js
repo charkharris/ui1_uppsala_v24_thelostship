@@ -198,9 +198,10 @@ function mainDriver() {
           $nameElement.append($addToCartButton);
 
           // Add to cart button functionality
-          $addToCartButton.click(function () {
+          $addToCartButton.click(function (event) {
             console.log(spirit);
             addItemToCart(spirit);
+            event.stopPropagation();
           });
 
           // Append name element to drink-name
@@ -342,6 +343,7 @@ function mainDriver() {
         // Add button to add to cart
         const $addToCartButton = $("<button>").text("Add to Cart");
         $addToCartButton.click(function () {
+          event.stopPropagation();
           addItemToCart(spirit);
         });
 
