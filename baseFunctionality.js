@@ -38,7 +38,6 @@ function mainDriver() {
           user.credentials === "1" ||
           user.credentials === "2"
         ) {
-          console.log("hr");
           staffview();
         } else if (user.credentials === "3") {
           vipview(username);
@@ -46,11 +45,11 @@ function mainDriver() {
         // Password is correct, login successful
       } else {
         // Password is incorrect
-        console.log("Incorrect password. Please try again.");
+        alert("Incorrect password. Please try again.");
       }
     } else {
       // User with the provided username not found
-      console.log("User not found. Please check your username.");
+      alert("User not found. Please check your username.");
     }
   }
 
