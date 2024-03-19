@@ -4,13 +4,22 @@ document.addEventListener("DOMContentLoaded", function () {
   const htmlContent = `
         <header>
             <div>
-                <img src="profile-icon.png" alt="Profile Icon" />
-                <span class="profile-icon">P</span>
+                <img src="images/user-circle.png" alt="Profile Icon" />
+                <span class="user-circle">Customer</span>
             </div>
-            <div class ="logClass"> 
-                <span class="language-icon">Language</span>
+            <div class="logo-container">
+                <img src="images/flying-dutchmen.png" alt="Flying Dutchman" class="logo">
+            </div>
+            <div class ="logClass">
+                <img src="images/globe-03.png" alt="language Icon" />
                 <span class="log"></span>
-        
+            </div>
+            <div class="langClass">
+                <select id="localization-switcher" class="locale-switcher">
+                    <option value="en">English</option>
+                    <option value="se">Swedish</option>
+                    <option value="no">Norwegian</option>
+                </select>
             </div>
         </header>
     
@@ -19,10 +28,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 <!-- Left Panel Content -->
                 <div class="sidebar">
                     <!-- Sidebar Content -->
-                    <p class="category" id="home">Home</p>
+                    <p class="category" id="home" localization-key="home"></p>
                     <p class="category" id="alcoholic">Alcoholic</p>
-                    <p class="category" onclick="showItems('Soft Drink')">Soft Drink</p>
-                    <p class="category" id="alcoholfree">Alcohol Free</p>
+                    
+                    <p class="category" id="alcoholfree"></p>
                 </div>
             </div>
 

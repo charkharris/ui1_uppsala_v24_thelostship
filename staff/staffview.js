@@ -4,9 +4,33 @@ function staffview() {
   drinkHeading.textContent = "ORDERS";
   $("#tile-section").empty();
   $(".log").empty();
-  const logSpan = document.querySelector(".log");
-  //$(".logClass").empty();
+
+  $(".logClass").empty();
+  var logClassDiv = document.querySelector(".logClass");
+
+  // Create span elements with the specified classes and content
+  // Select the logClass div
+  var logClassDiv = document.querySelector(".logClass");
+
+  // Create span elements with the specified classes and content
+  var languageSpan = document.createElement("span");
+  languageSpan.className = "language-icon";
+  languageSpan.textContent = "Language";
+
+  var space = document.createTextNode(" "); // Create a space
+
+  var logSpan = document.createElement("span");
+  logSpan.className = "log";
+  // You can set text content for logSpan if needed
+
+  // Append the created elements to the logClass div with space in between
+  logClassDiv.appendChild(languageSpan);
+  logClassDiv.appendChild(space); // Append the space
+  logClassDiv.appendChild(logSpan);
+
   logSpan.textContent = "Logout";
+  // var element = document.getElementById("alcoholfree");
+  // element.textContent = "";
 
   const home = document.querySelector("#home");
   home.textContent = "Orders";
@@ -15,41 +39,40 @@ function staffview() {
   alcoholicToStock.textContent = "Stock";
 
   const alcoholfreeToEpmty = document.querySelector("#alcoholfree");
-  alcoholfreeToEpmty.textContent = "Alcohol";
+  alcoholfreeToEpmty.textContent = "";
 
   //security button code
-    const securityBtn = document.createElement('button');
-    securityBtn.id = 'securityBtn';
-    securityBtn.textContent = 'Security';
-    securityBtn.className = 'security-btn';
+  const securityBtn = document.createElement("button");
+  securityBtn.id = "securityBtn";
+  securityBtn.textContent = "Security";
+  securityBtn.className = "security-btn";
 
-    const sidebar = document.querySelector('.sidebar');
-    sidebar.appendChild(securityBtn);
+  const sidebar = document.querySelector(".sidebar");
+  sidebar.appendChild(securityBtn);
 
-    let pressTimer;
+  let pressTimer;
 
-    securityBtn.addEventListener('mousedown', () => {
-      securityBtn.style.transition = 'background-color 3s ease';
-      securityBtn.style.backgroundColor = 'blue';
-    
-      pressTimer = window.setTimeout(() => {
-        alert('Security summoned!');
-        securityBtn.style.backgroundColor = ''; // Reset background color
-        securityBtn.style.transition = ''
-      }, 2000); // Set timeout to 3 seconds
-    });
-    
-    securityBtn.addEventListener('mouseup', () => {
-      clearTimeout(pressTimer); // Clear the timeout
-      securityBtn.style.backgroundColor = ''; // Reset background color
-      securityBtn.style.transition = ''; // Remove the transition
-    });
+  securityBtn.addEventListener("mousedown", () => {
+    securityBtn.style.transition = "background-color 3s ease";
+    securityBtn.style.backgroundColor = "blue";
 
+    pressTimer = window.setTimeout(() => {
+      alert("Security summoned!");
+      securityBtn.style.backgroundColor = ""; // Reset background color
+      securityBtn.style.transition = "";
+    }, 2000); // Set timeout to 3 seconds
+  });
+
+  securityBtn.addEventListener("mouseup", () => {
+    clearTimeout(pressTimer); // Clear the timeout
+    securityBtn.style.backgroundColor = ""; // Reset background color
+    securityBtn.style.transition = ""; // Remove the transition
+  });
 
   logSpan.addEventListener("click", function () {
     // Prompt the user for username and password
 
-    location.reload();
+    location.reload(true);
   });
   function displayOrders(orders) {
     $("#tile-section").empty();

@@ -11,9 +11,14 @@ function mainDriver() {
   const logSpan = document.querySelector(".log");
   //$(".logClass").empty();
   logSpan.textContent = "Login";
+  var element = $("#alcoholfree");
+
+  element.text("Alcohol Free");
+  let username;
+
   logSpan.addEventListener("click", function () {
     // Prompt the user for username and password
-    const username = prompt("Enter your username:");
+    username = prompt("Enter your username:");
     const password = prompt("Enter your password:");
 
     login(username, password);
@@ -27,27 +32,24 @@ function mainDriver() {
     // Check if a user with the provided username exists
     if (user) {
       if (user.password === password) {
-        console.log(user.credentials);
-        console.log(user.username);
         // Show staff view for staff members only
         if (
           user.credentials === "0" ||
           user.credentials === "1" ||
           user.credentials === "2"
         ) {
-          console.log("hr");
           staffview();
         } else if (user.credentials === "3") {
-          vipview();
+          vipview(username);
         }
         // Password is correct, login successful
       } else {
         // Password is incorrect
-        console.log("Incorrect password. Please try again.");
+        alert("Incorrect password. Please try again.");
       }
     } else {
       // User with the provided username not found
-      console.log("User not found. Please check your username.");
+      alert("User not found. Please check your username.");
     }
   }
 
@@ -361,7 +363,7 @@ function mainDriver() {
   const alcoholicCategory = document.getElementById("alcoholic");
 
   alcoholicCategory.addEventListener("click", function () {
-    filterSpirits("0");
+    filterSpirits("1");
     const newTitle = "Alcoholic";
     const $newTitleElement = $("<h1>").text(newTitle);
     $("#title-container").empty().append($newTitleElement);
@@ -433,7 +435,11 @@ function mainDriver() {
     localStorage.setItem("spirits", JSON.stringify(DB2.spirits));
 
     alert("Order submitted!");
-
+    var user = DB.users.find(function (user) {
+      return user.username === username;
+    });
+    user.credit -= totalOrderPrice;
+    console.log(user.credit);
     // Clear the cart after submission
     $("#order-container").empty();
 
@@ -464,6 +470,7 @@ function mainDriver() {
         `Order ${index + 1}: ${order.items.join(", ")}`
       );
       $("#order-details").append($orderItem);
+      console.log($("#order-details"));
     });
   }
 
@@ -487,25 +494,24 @@ function mainDriver() {
     }
   };
 
-  function showPopup(){
-   
+  function showPopup() {
     //attach to menu items
-    var menuItems = document.querySelectorAll('.spirit');
-    menuItems.forEach(function(spirit){
-        spirit.addEventListener('click', function(){
-            var itemId = spirit.getAttribute('data-id');
-            showModalWithContent('menuItem', itemId);
-        });
+    var menuItems = document.querySelectorAll(".spirit");
+    menuItems.forEach(function (spirit) {
+      spirit.addEventListener("click", function () {
+        var itemId = spirit.getAttribute("data-id");
+        showModalWithContent("menuItem", itemId);
+      });
     });
 
     //attach to submit order button
-    var submitOrder = document.querySelector('.submit-order');
+    var submitOrder = document.querySelector(".submit-order");
     if (submitOrder) {
-        submitOrder.addEventListener('click', function(){
-            showModalWithContent('cart');
-        });
+      submitOrder.addEventListener("click", function () {
+        showModalWithContent("cart");
+      });
     }
-}
+  }
 
   //this function decides what content to show in the modal based on the type of popup required
   function showModalWithContent(popupType, data) {
@@ -605,7 +611,7 @@ function mainDriver() {
 
   function filterAlcoholFree(category) {
     const matchingSpirits = spiritsArray.filter(
-      (spirit) => spirit.alkoholhalt === category
+      (spirit) => spirit.alkoholhalt < category
     );
     console.log(category);
     $("#drink-name").empty(); // Clear previous spirits
@@ -645,7 +651,7 @@ function mainDriver() {
   }
 
   nonAlcoholicCategory.addEventListener("click", function () {
-    filterAlcoholFree("0%");
+    filterAlcoholFree("1%");
     const newTitle = "Alcohol Free";
     const $newTitleElement = $("<h1>").text(newTitle);
     $("#title-container").empty().append($newTitleElement);

@@ -4,7 +4,7 @@ var DB = {
       user_id: "2",
       credentials: "0",
       password: "123",
-      username: "mohit",
+      username: "staff",
       first_name: "Jory",
       last_name: "Assies",
       email: "jory.assies@it.uu.se",
@@ -19,6 +19,7 @@ var DB = {
       last_name: "Street",
       email: "sulayman.street@it.uu.se",
       phone: "0701517627",
+      credit: "10000",
     },
     {
       user_id: "27",
